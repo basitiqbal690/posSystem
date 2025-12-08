@@ -53,27 +53,33 @@ const Inventory = () => {
       />
 
       {/* Filter Buttons */}
-      <div className="m-6 p-5 bg-white rounded-xl shadow flex gap-4">
+      <div className="flex ml-8 mt-6 gap-4 border-b border-gray-300 mb-5">
         <button
           onClick={() => setFilter("all")}
-          className={`p-2 border rounded-2xl ${
-            filter === "all" ? "bg-black text-white" : "bg-gray-200"
+          className={`px-4 py-2 cursor-pointer ${
+            filter === "all"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500 hover:text-black"
           }`}
         >
           All Products
         </button>
         <button
           onClick={() => setFilter("low")}
-          className={`p-2 border rounded-2xl ${
-            filter === "low" ? "bg-black text-white" : "bg-gray-200"
+          className={`px-4 py-2 cursor-pointer ${
+            filter === "low"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500 hover:text-black"
           }`}
         >
           Low Stock
         </button>
         <button
           onClick={() => setFilter("out")}
-          className={`p-2 border rounded-2xl ${
-            filter === "out" ? "bg-black text-white" : "bg-gray-200"
+          className={`px-4 py-2 cursor-pointer ${
+            filter === "out"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500 hover:text-black"
           }`}
         >
           Out of Stock

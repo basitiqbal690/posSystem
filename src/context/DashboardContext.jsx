@@ -3,16 +3,22 @@ import { createContext, useContext } from "react";
 import { BsGraphUp, BsBox } from "react-icons/bs";
 import { FiAlertTriangle } from "react-icons/fi";
 import { CgShoppingBag } from "react-icons/cg";
+import { FaRupeeSign } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 export const DashboardContext = createContext();
 
 export const DashboardProvider = ({ children }) => {
+  const totalProducts = useSelector(
+    (state) => state.productsAdd.products.length
+  );
+
   const dashboardData = {
     cards: [
       {
         title: "Total Revenue ",
-        value: "$0.00",
-        icon: "$",
+        value: "0.00",
+        icon: <FaRupeeSign size={17} />,
         borderColor: "green",
         subText: (
           <div className="flex pl-2 mt-2">
@@ -23,15 +29,15 @@ export const DashboardProvider = ({ children }) => {
       },
       {
         title: "Today's Revenue",
-        value: "$0.00",
-        icon: "$",
+        value: "0.00",
+        icon: <FaRupeeSign size={17} />,
         borderColor: "blue",
         subText: <span className="ml-2">0 transaction</span>,
       },
       {
         title: "Total Products",
-        value: "16",
-        icon: "$",
+        value: totalProducts,
+        icon: <FaRupeeSign size={17} />,
         borderColor: "purple",
         subText: <span className="ml-2">Active Products</span>,
       },

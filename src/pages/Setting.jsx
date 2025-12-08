@@ -14,58 +14,75 @@ const Setting = () => {
   return (
     <div className="bg-gray-200 relative min-h-screen overflow-hidden">
       <div className="mt-5 pl-7 pt-7">
-        <h1 className="font-semibold text-xl">System Settings</h1>
+        <h1 className="font-semibold text-2xl">System Settings</h1>
         <p className="text-gray-500 text-xl">
           Configure system settings and preferences
         </p>
       </div>
 
       {/* Tab Buttons */}
-      <div className="m-6 p-1 bg-white rounded-xl shadow flex gap-2 flex-wrap">
+      <div className="flex  justify-between  border-b border-gray-300 mb-5 text-xl mt-5 mr-10">
         <button
           onClick={() => setActiveTab("store")}
-          className={`px-14 font-bold py-2 border rounded-2xl ml-6 ${
-            activeTab === "store" ? "bg-black text-white" : ""
+          className={`px-4 py-2 mx-7 cursor-pointer transition-colors duration-200 ${
+            activeTab === "store"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500 hover:text-black"
           }`}
         >
           Store
         </button>
+
         <button
           onClick={() => setActiveTab("tax")}
-          className={`px-14 font-bold py-2 border rounded-2xl ${
-            activeTab === "tax" ? "bg-black text-white" : ""
+          className={`px-4 py-2 cursor-pointer transition-colors duration-200 ${
+            activeTab === "tax"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500 hover:text-black"
           }`}
         >
           Tax
         </button>
+
         <button
           onClick={() => setActiveTab("receipt")}
-          className={`px-14 font-bold py-2 border rounded-2xl ${
-            activeTab === "receipt" ? "bg-black text-white" : ""
+          className={`px-4 py-2 cursor-pointer transition-colors duration-200 ${
+            activeTab === "receipt"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500 hover:text-black"
           }`}
         >
           Receipt
         </button>
+
         <button
           onClick={() => setActiveTab("user")}
-          className={`px-14 font-bold py-2 border rounded-2xl ${
-            activeTab === "user" ? "bg-black text-white" : ""
+          className={`px-4 py-2 cursor-pointer transition-colors duration-200 ${
+            activeTab === "user"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500 hover:text-black"
           }`}
         >
           User
         </button>
+
         <button
           onClick={() => setActiveTab("payment")}
-          className={`px-14 font-bold py-2 border rounded-2xl ${
-            activeTab === "payment" ? "bg-black text-white" : ""
+          className={`px-4 py-2 cursor-pointer transition-colors duration-200 ${
+            activeTab === "payment"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500 hover:text-black"
           }`}
         >
           Payment
         </button>
+
         <button
           onClick={() => setActiveTab("system")}
-          className={`px-14 font-bold py-2 border rounded-2xl ${
-            activeTab === "system" ? "bg-black text-white" : ""
+          className={`px-4 py-2 cursor-pointer transition-colors duration-200 ${
+            activeTab === "system"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500 hover:text-black"
           }`}
         >
           System

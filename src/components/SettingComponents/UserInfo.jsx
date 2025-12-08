@@ -57,13 +57,8 @@ const UserInfo = () => {
   };
 
   return (
-    <div className="bg-gray-200 min-h-screen">
-      <div className="mt-5 pl-7 pt-7">
-        <h1 className="font-semibold text-2xl">User Management</h1>
-        <p className="text-gray-500 text-xl">Add, Edit or Delete Users</p>
-      </div>
-
-      <div className="m-6 p-5 bg-white rounded-xl flex justify-between shadow">
+    <div className="bg-gray-200 ">
+      <div className=" pl-7 pt-7 bg-white rounded-2xl flex justify-between items-center p-5 shadow">
         <div>
           <h1 className="font-semibold text-xl">Users</h1>
           <p className="text-gray-500 text-xl">Manage your users list</p>

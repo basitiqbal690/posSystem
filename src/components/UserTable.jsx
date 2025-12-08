@@ -3,7 +3,7 @@ import UserRow from "./UserRow";
 
 const UserTable = ({ userList, openEditModal, removeUser, listName }) => {
   return (
-    <div className="m-6 bg-white p-6 rounded-2xl shadow-lg">
+    <div className="mt-4 bg-white p-6 rounded-2xl shadow-lg">
       <h2 className="text-2xl font-semibold mb-6">{listName}</h2>
 
       {userList.length === 0 ? (
