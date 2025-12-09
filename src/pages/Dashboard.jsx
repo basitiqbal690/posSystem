@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { Routes, Route, Navigate } from "react-router-dom";
 import OverView from "../pages/OverView";
+import Profile from "./Profile";
 import Products from "../pages/Products";
 import Categories from "../pages/Categories";
 import Inventory from "../pages/Inventory";
@@ -27,6 +28,7 @@ const Dashboard = () => {
               <Route path="categories" element={<Categories />} />
               <Route path="inventory" element={<Inventory />} />
               <Route path="salesReport" element={<SalesReport />} />
+              <Route path="profile" element={<Profile />} />
               <Route path="setting" element={<Setting />} />
               <Route path="" element={<Navigate to="overview" />} />
             </Routes>

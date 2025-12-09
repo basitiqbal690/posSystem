@@ -5,6 +5,7 @@ import { MdOutlineCategory, MdOutlineInventory2 } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaUserCircle } from "react-icons/fa";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 
@@ -89,6 +90,15 @@ const Sidebar = () => {
               <FaChartLine className="text-xl" />
               <span>Sales Report</span>
             </Link>
+
+            <Link
+  to="/dashboard/profile"
+  className="flex items-center gap-4 text-white text-lg p-3 hover:bg-blue-900 rounded-md"
+  onClick={() => setOpen(false)}
+>
+  <FaUserCircle className="text-xl" />
+  <span>Profile</span>
+</Link>
 
             <Link
               to="/dashboard/setting"
