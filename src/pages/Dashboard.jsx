@@ -9,8 +9,8 @@ import Categories from "../pages/Categories";
 import Inventory from "../pages/Inventory";
 import SalesReport from "../pages/SalesReport";
 import Setting from "../pages/Setting";
-
 import { DashboardProvider } from "../context/DashboardContext";
+import Pos from "./Pos";
 
 const Dashboard = () => {
   return (
@@ -18,7 +18,7 @@ const Dashboard = () => {
       <div className="flex">
         <Sidebar />
 
-        <div className="ml-[250px] flex-1">
+        <div className="lg:ml-[250px] ml-0 flex-1">
           <Navbar />
 
           <main className="pt-[70px] min-h-screen overflow-auto">
@@ -29,6 +29,7 @@ const Dashboard = () => {
               <Route path="inventory" element={<Inventory />} />
               <Route path="salesReport" element={<SalesReport />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="pos" element={<Pos />} />
               <Route path="setting" element={<Setting />} />
               <Route path="" element={<Navigate to="overview" />} />
             </Routes>

@@ -10,24 +10,15 @@ import { Link } from "react-router-dom";
 const schema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
-  email: yup
-    .string()
-    .email("Invalid email format")
-    .required("Email is required"),
-  password: yup
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
+  email: yup.string().email("Invalid email").required("Email required"),
+  password: yup.string().min(6).required("Password is required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required"),
+    .required("Confirm Password required"),
   phone: yup.string().required("Phone number is required"),
   role: yup.string().required("Role is required"),
-  storeName: yup.string().required("Store name is required"),
-  storeAddress: yup.string().required("Store address is required"),
-  currency: yup.string().required("Currency is required"),
-  terms: yup.boolean().oneOf([true], "You must agree to the terms"),
+  terms: yup.boolean().oneOf([true], "You must agree to continue"),
 });
 
 const SignUpPage = () => {
@@ -41,33 +32,30 @@ const SignUpPage = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    alert("Form submitted successfully!");
+    console.log("Form submitted:", data);
   };
 
   return (
-    <div className="h-screen w-full flex justify-center items-center bg-black overflow-auto p-4">
-      <div className="flex flex-col md:flex-row w-full max-w-5xl rounded-2xl bg-gray-700 h-auto md:h-[95vh] overflow-hidden shadow-lg">
-        {/* Left Image */}
-        <div className="md:w-1/2 w-full h-64 md:h-auto flex justify-center items-center bg-gray-800">
+    <div className="min-h-screen w-full flex justify-center items-center bg-black p-4">
+      <div className="flex flex-col md:flex-row w-full max-w-5xl rounded-2xl bg-gray-700 overflow-hidden shadow-lg">
+        {/* LEFT IMAGE (FULL WIDTH ON SM, HALF ON MD+) */}
+        <div className="w-full md:w-1/2 h-56 md:h-auto bg-gray-800">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFDNpz38eBCNUwtSo3AYCRxXixG-34-1ESHQ&s"
             alt="Not Found"
-            className="h-full w-full object-cover md:rounded-l-2xl"
+            className="h-full w-full object-cover"
           />
         </div>
 
-        {/* Right Form */}
-        <div className="md:w-1/2 w-full p-6 flex flex-col overflow-auto">
+        {/* RIGHT FORM */}
+        <div className="w-full md:w-1/2 p-6 overflow-auto max-h-[90vh]">
+          {/* Title + Link */}
           <h1 className="text-white text-2xl md:text-3xl font-bold mb-2 text-center md:text-left">
             Create an account
           </h1>
           <p className="text-white mb-4 text-center md:text-left">
             Already have an account?{" "}
-            <Link
-              to="/"
-              className="text-purple-300 underline hover:scale-105 transition"
-            >
+            <Link to="/" className="text-purple-300 underline">
               Log in
             </Link>
           </p>
@@ -76,9 +64,9 @@ const SignUpPage = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-4"
           >
-            {/* First & Last Name */}
+            {/* First + Last Name */}
             <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex flex-col w-full md:w-1/2">
+              <div className="flex flex-col w-full">
                 <input
                   {...register("firstName")}
                   placeholder="First Name"
@@ -91,7 +79,7 @@ const SignUpPage = () => {
                 )}
               </div>
 
-              <div className="flex flex-col w-full md:w-1/2">
+              <div className="flex flex-col w-full">
                 <input
                   {...register("lastName")}
                   placeholder="Last Name"
@@ -120,17 +108,18 @@ const SignUpPage = () => {
               )}
             </div>
 
-            {/* Password & Confirm Password */}
+            {/* Password + Confirm */}
             <div className="flex flex-col md:flex-row gap-4">
-              <div className="relative flex flex-col w-full md:w-1/2">
+              {/* Password */}
+              <div className="relative w-full">
                 <input
                   {...register("password")}
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   className="bg-gray-600 p-3 text-white rounded w-full"
                 />
-                <div
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-white"
+                <span
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-white"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -138,7 +127,7 @@ const SignUpPage = () => {
                   ) : (
                     <AiFillEye size={20} />
                   )}
-                </div>
+                </span>
                 {errors.password && (
                   <p className="text-red-400 text-sm mt-1">
                     {errors.password.message}
@@ -146,15 +135,16 @@ const SignUpPage = () => {
                 )}
               </div>
 
-              <div className="relative flex flex-col w-full md:w-1/2">
+              {/* Confirm Password */}
+              <div className="relative w-full">
                 <input
                   {...register("confirmPassword")}
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm Password"
                   className="bg-gray-600 p-3 text-white rounded w-full"
                 />
-                <div
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-white"
+                <span
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-white"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? (
@@ -162,7 +152,7 @@ const SignUpPage = () => {
                   ) : (
                     <AiFillEye size={20} />
                   )}
-                </div>
+                </span>
                 {errors.confirmPassword && (
                   <p className="text-red-400 text-sm mt-1">
                     {errors.confirmPassword.message}
@@ -171,12 +161,11 @@ const SignUpPage = () => {
               </div>
             </div>
 
-            {/* Phone & Role */}
+            {/* Phone + Role */}
             <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex flex-col w-full md:w-1/2">
+              <div className="flex flex-col w-full">
                 <input
                   {...register("phone")}
-                  type="text"
                   placeholder="Phone Number"
                   className="bg-gray-600 p-3 text-white rounded w-full"
                 />
@@ -187,7 +176,7 @@ const SignUpPage = () => {
                 )}
               </div>
 
-              <div className="flex flex-col w-full md:w-1/2">
+              <div className="flex flex-col w-full">
                 <select
                   {...register("role")}
                   className="bg-gray-600 p-3 text-white rounded w-full"
@@ -220,20 +209,20 @@ const SignUpPage = () => {
             {/* Submit */}
             <button
               type="submit"
-              className="bg-blue-600 text-white p-3 rounded hover:scale-105 transition w-full"
+              className="bg-blue-600 text-white p-3 rounded hover:scale-105 transition"
             >
               Create Account
             </button>
 
-            {/* OR continue with */}
+            {/* OR Divider */}
             <div className="flex items-center gap-2 my-2">
               <hr className="flex-1 border-gray-400" />
               <p className="text-white text-sm">or continue with</p>
               <hr className="flex-1 border-gray-400" />
             </div>
 
-            {/* Google login */}
-            <button className="flex items-center justify-center gap-2 border border-white p-2 rounded w-full hover:scale-105 transition">
+            {/* Google Login */}
+            <button className="flex items-center justify-center gap-2 border border-white p-2 rounded hover:scale-105 transition">
               <FcGoogle size={24} />
               <span className="text-white">Google</span>
             </button>

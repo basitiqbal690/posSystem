@@ -92,13 +92,22 @@ const Sidebar = () => {
             </Link>
 
             <Link
-  to="/dashboard/profile"
-  className="flex items-center gap-4 text-white text-lg p-3 hover:bg-blue-900 rounded-md"
-  onClick={() => setOpen(false)}
->
-  <FaUserCircle className="text-xl" />
-  <span>Profile</span>
-</Link>
+              to="/dashboard/pos"
+              className="flex items-center gap-4 text-white text-lg p-3 hover:bg-blue-900 rounded-md"
+              onClick={() => setOpen(false)}
+            >
+              <FaChartLine className="text-xl" />
+              <span>POS</span>
+            </Link>
+
+            <Link
+              to="/dashboard/profile"
+              className="flex items-center gap-4 text-white text-lg p-3 hover:bg-blue-900 rounded-md"
+              onClick={() => setOpen(false)}
+            >
+              <FaUserCircle className="text-xl" />
+              <span>Profile</span>
+            </Link>
 
             <Link
               to="/dashboard/setting"
