@@ -7,7 +7,7 @@ import { RiHomeLine } from "react-icons/ri";
 import { LuLogOut } from "react-icons/lu";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Navbar = () => {
   const [value, setValue] = useState(new Date());
 
   useEffect(() => {
@@ -66,4 +66,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;

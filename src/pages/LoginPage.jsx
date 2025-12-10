@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
@@ -19,8 +19,10 @@ const schema = yup.object().shape({
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [loginError, setLoginError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState("");
 
   const {
     register,
@@ -29,9 +31,26 @@ const LoginPage = () => {
     getValues,
   } = useForm({ resolver: yupResolver(schema) });
 
+  useEffect(() => {
+    const roleFromState = location.state?.role;
+    const roleFromStorage = localStorage.getItem("userRole");
+
+    if (roleFromState) setRole(roleFromState);
+    else if (roleFromStorage) setRole(roleFromStorage);
+  }, [location.state]);
+
   const onSubmit = () => {
     const { email, password } = getValues();
-    if (email === "admin@pos.com" && password === "admin123") {
+
+    const savedUser = JSON.parse(localStorage.getItem("userData"));
+
+    if (!savedUser) {
+      setLoginError("No user found. Please sign up first.");
+      return;
+    }
+
+    // CHECK LOGIN
+    if (email === savedUser.email && password === savedUser.password) {
       setLoginError("");
       navigate("/dashboard/overview");
     } else {
@@ -54,20 +73,23 @@ const LoginPage = () => {
         {/* Right Form */}
         <div className="md:w-1/2 w-full p-6 flex flex-col justify-center">
           <h1 className="text-white text-3xl font-bold mb-6 text-center md:text-left">
-            Login
+            Login {role && `(${role})`}
           </h1>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-4"
           >
+            {/* Email */}
             <div className="flex flex-col">
-              <input
-                {...register("email")}
-                type="email"
-                className="bg-gray-600 p-3 text-white rounded w-full"
-                placeholder="Email"
-              />
+              <div className="relative w-full h-12">
+                <input
+                  {...register("email")}
+                  type="email"
+                  className="bg-gray-600 p-3 h-full text-white rounded w-full"
+                  placeholder="Email"
+                />
+              </div>
               {errors.email && (
                 <p className="text-red-400 text-sm mt-1">
                   {errors.email.message}
@@ -75,23 +97,27 @@ const LoginPage = () => {
               )}
             </div>
 
-            <div className="relative flex flex-col">
-              <input
-                {...register("password")}
-                type={showPassword ? "text" : "password"}
-                className="bg-gray-600 p-3 text-white rounded w-full pr-10"
-                placeholder="Password"
-              />
-              <div
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-white"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <AiFillEyeInvisible size={20} />
-                ) : (
-                  <AiFillEye size={20} />
-                )}
+            {/* Password */}
+            <div className="flex flex-col">
+              <div className="relative w-full h-12">
+                <input
+                  {...register("password")}
+                  type={showPassword ? "text" : "password"}
+                  className="bg-gray-600 p-3 h-full text-white rounded w-full pr-10"
+                  placeholder="Password"
+                />
+                <div
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-white"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <AiFillEyeInvisible size={20} />
+                  ) : (
+                    <AiFillEye size={20} />
+                  )}
+                </div>
               </div>
+
               {errors.password && (
                 <p className="text-red-400 text-sm mt-1">
                   {errors.password.message}
@@ -99,6 +125,7 @@ const LoginPage = () => {
               )}
             </div>
 
+            {/* Login Error */}
             {loginError && (
               <p className="text-red-500 text-sm mt-1">{loginError}</p>
             )}

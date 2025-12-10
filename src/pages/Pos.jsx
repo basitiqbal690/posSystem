@@ -16,8 +16,14 @@ import {
 } from "../store/slice/CartSlice";
 import { updateProductStock } from "../store/slice/AddProductSlice";
 
+import CheckoutModal from "../components/PosComponents/CheckoutModal";
+
 const Pos = () => {
   const [activeTab, setActiveTab] = useState("Allproducts");
+  const [showModal, setShowModal] = useState(false);
+
+  const openCheckoutModal = () => setShowModal(true);
+  const closeCheckoutModal = () => setShowModal(false);
 
   const cart = useSelector((state) => state.cart.cartItems);
   const taxRate = useSelector((state) => state.cart.taxRate);
@@ -42,10 +48,17 @@ const Pos = () => {
   const tax = (subtotal * taxRate) / 100;
   const total = subtotal + tax;
 
+  // ** FIX: Add this missing function **
+  const handleCompletePayment = (data) => {
+    console.log("Payment completed with data:", data);
+    // Here you can add real payment processing and cart clearing if needed.
+    closeCheckoutModal();
+  };
+
   return (
     <div className="relative bg-gray-100 min-h-screen">
       {/* TABS */}
-      <div className="flex border-b border-gray-300 mb-5 text-xl mt-5 px-10 gap-10">
+      <div className="flex border-b border-gray-300 mb-5  px-10 gap-5 pt-10">
         <button
           onClick={() => setActiveTab("Allproducts")}
           className={`px-4 pb-2 ${
@@ -98,7 +111,7 @@ const Pos = () => {
         </button>
         <button
           onClick={() => setActiveTab("Accessories")}
-          className={`px-4 pb-2 ${
+          className={`px-4 pb-2  ${
             activeTab === "Accessories"
               ? "border-b-2 border-black font-semibold"
               : "text-gray-500 hover:text-black"
@@ -106,8 +119,8 @@ const Pos = () => {
         >
           Accessories
         </button>
+        {/* </div> */}
       </div>
-
       {/* TAB CONTENT */}
       <div
         className={`px-6 transition-all duration-300 ${
@@ -124,7 +137,7 @@ const Pos = () => {
 
       {/* RIGHT CART PANEL */}
       {cart.length > 0 && (
-        <div className="fixed right-0 top-23 h-full w-[350px] bg-white shadow-xl p-5 border-l z-50">
+        <div className="fixed right-0 top-[90px] h-[calc(100vh-90px)] w-[350px] bg-white shadow-xl p-5 border-l z-50 overflow-y-auto">
           <h2 className="font-bold text-xl mb-4">Cart ({cart.length})</h2>
           <div className="space-y-4 max-h-[33vh] overflow-y-auto">
             {cart.map((item) => (
@@ -179,9 +192,21 @@ const Pos = () => {
               <span>Total</span>
               <span>PKR {total.toFixed(2)}</span>
             </div>
-            <button className="bg-green-600 text-white mt-4 w-full py-3 rounded-lg">
+            <button
+              onClick={openCheckoutModal}
+              className="bg-green-600 text-white mt-4 w-full py-3 rounded-lg hover:scale-101 cursor-pointer"
+            >
               Proceed to Checkout
             </button>
+
+            {/* modal */}
+            {showModal && (
+              <CheckoutModal
+                totalAmount={total}
+                onClose={closeCheckoutModal}
+                onComplete={handleCompletePayment}
+              />
+            )}
           </div>
         </div>
       )}

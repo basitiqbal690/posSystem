@@ -15,18 +15,16 @@ const ProductModal = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ⭐ FILE UPLOAD HANDLER
+  // File upload handler
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Create a blob URL for preview
     const imageURL = URL.createObjectURL(file);
-
     setFormData({
       ...formData,
       image: imageURL,
-      imageFile: file, // optional if you want to upload to a backend later
+      imageFile: file,
     });
   };
 
@@ -62,8 +60,10 @@ const ProductModal = ({
           >
             <option value="">Select Category</option>
             <option value="Electronics">Electronics</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Books">Books</option>
+            <option value="Appliances">Appliances</option>
+            <option value="Fitness">Fitness</option>
+            <option value="Home">Home</option>
+            <option value="Accessories">Accessories</option>
           </select>
 
           <input
@@ -79,6 +79,7 @@ const ProductModal = ({
             name="stock"
             type="number"
             placeholder="Stock"
+            min="0"
             value={formData.stock}
             onChange={handleChange}
             className="p-2 border rounded"
@@ -92,7 +93,7 @@ const ProductModal = ({
             className="col-span-2 p-2 border rounded"
           />
 
-          {/* ⭐ FILE UPLOAD INPUT */}
+          {/* File Upload */}
           <div className="col-span-2 flex flex-col">
             <label className="text-sm font-medium mb-1">Upload Image *</label>
             <input
@@ -103,7 +104,6 @@ const ProductModal = ({
             />
           </div>
 
-          {/* ⭐ SHOW PREVIEW */}
           {formData.image && (
             <img
               src={formData.image}
