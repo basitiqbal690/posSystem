@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useSelector } from "react-redux";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -15,6 +16,7 @@ const schema = yup.object().shape({
 });
 
 const TaxInfo = () => {
+  const darkMode = useSelector((state) => state.theme.darkMode);
   const [includeTax, setIncludeTax] = useState(false);
 
   const {
@@ -34,12 +36,27 @@ const TaxInfo = () => {
     alert("Tax settings saved successfully!");
   };
 
+  const inputBase =
+    "w-full border rounded px-3 py-2 focus:outline-none focus:ring-2";
+  const inputLight = "border-gray-300 bg-white text-black focus:ring-blue-400";
+  const inputDark =
+    "border-gray-600 bg-gray-700 text-white focus:ring-blue-500";
+
+  const bgCard = darkMode ? "bg-gray-800 text-white" : "bg-white text-black";
+  const textGray = darkMode ? "text-gray-300" : "text-gray-500";
+  const toggleBg = darkMode
+    ? "bg-gray-700 peer-checked:bg-green-600"
+    : "bg-gray-200 peer-checked:bg-black";
+  const btnClass = darkMode
+    ? "bg-green-700 text-white hover:bg-green-600"
+    : "bg-black text-white hover:bg-gray-800";
+
   return (
-    <div className="bg-white rounded-xl shadow p-6">
+    <div className={`${bgCard} rounded-xl shadow p-6`}>
       <h2 className="text-lg font-semibold mb-2 flex items-center gap-2">
         <span>💰</span> Tax Configuration
       </h2>
-      <p className="text-gray-500 mb-6">Set up tax rates and preferences</p>
+      <p className={`${textGray} mb-6`}>Set up tax rates and preferences</p>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -50,7 +67,7 @@ const TaxInfo = () => {
           <label className="font-medium mb-1">Tax Name *</label>
           <input
             {...register("taxName")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
             placeholder="Sales Tax"
           />
           {errors.taxName && (
@@ -66,7 +83,7 @@ const TaxInfo = () => {
           <input
             type="number"
             {...register("taxRate")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
             placeholder="10"
           />
           {errors.taxRate && (
@@ -77,10 +94,14 @@ const TaxInfo = () => {
         </div>
 
         {/* Include tax toggle (full width) */}
-        <div className="flex items-center justify-between col-span-2 bg-gray-100 p-4 rounded">
+        <div
+          className={`flex items-center justify-between col-span-2 p-4 rounded ${
+            darkMode ? "bg-gray-700" : "bg-gray-100"
+          }`}
+        >
           <div>
             <label className="font-medium">Include tax in product prices</label>
-            <p className="text-gray-500 text-sm">
+            <p className={`${textGray} text-sm`}>
               Tax will be included in displayed prices
             </p>
           </div>
@@ -92,7 +113,9 @@ const TaxInfo = () => {
                 onChange={() => setIncludeTax(!includeTax)}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-black transition-all"></div>
+              <div
+                className={`w-11 h-6 rounded-full transition-all ${toggleBg}`}
+              ></div>
               <div
                 className={`absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transform transition-transform ${
                   includeTax ? "translate-x-full" : ""
@@ -104,10 +127,7 @@ const TaxInfo = () => {
 
         {/* Submit Button */}
         <div className="col-span-2 flex justify-start mt-4">
-          <button
-            type="submit"
-            className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
-          >
+          <button type="submit" className={`${btnClass} px-6 py-2 rounded`}>
             Save Tax Settings
           </button>
         </div>

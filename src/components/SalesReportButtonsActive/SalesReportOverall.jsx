@@ -1,35 +1,46 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { FiShoppingBag } from "react-icons/fi";
 
 const SalesReportOverall = () => {
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
+  const cardClass = `p-4 rounded shadow ${
+    darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+  }`;
+
+  const sectionClass = `p-5 rounded shadow ${
+    darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+  }`;
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
-        <div className="bg-white p-4 rounded shadow flex items-center justify-between">
-          <div>
-            <p className="text-gray-500 text-sm">Total Revenue (All Time)</p>
-            <p className="font-bold text-xl">0.00</p>
-            <p className="text-gray-400 text-xs">From all transactions</p>
-          </div>
+        <div className={cardClass}>
+          <p className="text-gray-400 text-sm">Total Revenue (All Time)</p>
+          <p className="font-bold text-xl">0.00</p>
+          <p className="text-gray-400 text-xs">From all transactions</p>
         </div>
 
-        <div className="bg-white p-4 rounded shadow flex items-center justify-between">
-          <div>
-            <p className="text-gray-500 text-sm">Total Transactions</p>
-            <p className="font-bold text-xl">0</p>
-            <p className="text-gray-400 text-xs">All time</p>
-          </div>
+        <div className={cardClass}>
+          <p className="text-gray-400 text-sm">Total Transactions</p>
+          <p className="font-bold text-xl">0</p>
+          <p className="text-gray-400 text-xs">All time</p>
         </div>
       </div>
 
-      {/* Transactions Section */}
-      <div className="bg-white p-5 rounded shadow">
+      <div className={sectionClass}>
         <h2 className="font-semibold mb-2">All Transactions</h2>
-        <p className="text-gray-500 text-sm mb-4">
+        <p className="text-gray-400 text-sm mb-4">
           Complete transaction history
         </p>
-        <div className="flex flex-col items-center justify-center py-10 border-2 border-dashed border-gray-300 rounded">
-          <FiShoppingBag className="text-gray-300 text-4xl mb-2" />
+
+        <div
+          className={`flex flex-col items-center justify-center py-10 border-2 border-dashed rounded ${
+            darkMode ? "border-gray-500" : "border-gray-300"
+          }`}
+        >
+          <FiShoppingBag className="text-gray-400 text-4xl mb-2" />
           <p className="text-gray-400">No transactions yet</p>
         </div>
       </div>

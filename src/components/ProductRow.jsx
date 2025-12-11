@@ -1,9 +1,12 @@
 import React from "react";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const ProductRow = ({ item, openEditModal, removeProduct }) => {
-  let handleDelete = () => {
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
+  const handleDelete = () => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete the product "${item.name}"?`
     );
@@ -12,8 +15,11 @@ const ProductRow = ({ item, openEditModal, removeProduct }) => {
       removeProduct(item.sku);
     }
   };
+
   return (
-    <tr className="hover:bg-gray-50 transition-colors duration-200 text-gray-700">
+    <tr
+      className={`${darkMode ? " text-white" : "hover:bg-gray-50 text-black"}`}
+    >
       <td className="px-6 py-4">{item.sku}</td>
       <td className="px-6 py-4">{item.name}</td>
       <td className="px-6 py-4">{item.category}</td>
@@ -30,12 +36,20 @@ const ProductRow = ({ item, openEditModal, removeProduct }) => {
       <td className="px-6 py-4 text-center">
         <div className="inline-flex items-center gap-3">
           <CiEdit
-            className="text-blue-600 cursor-pointer hover:text-blue-800 transition"
+            className={`cursor-pointer transition ${
+              darkMode
+                ? "text-blue-400 hover:text-blue-200"
+                : "text-blue-600 hover:text-blue-800"
+            }`}
             size={22}
             onClick={() => openEditModal(item)}
           />
           <MdDeleteOutline
-            className="text-red-500 cursor-pointer hover:text-red-700 transition"
+            className={`cursor-pointer transition ${
+              darkMode
+                ? "text-red-400 hover:text-red-200"
+                : "text-red-500 hover:text-red-700"
+            }`}
             size={22}
             onClick={handleDelete}
           />

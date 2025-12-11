@@ -12,16 +12,21 @@ import Setting from "../pages/Setting";
 import { DashboardProvider } from "../context/DashboardContext";
 import Pos from "./Pos";
 
+// Redux
+// import { useSelector } from "react-redux";
+
 const Dashboard = () => {
+  // const darkMode = useSelector((state) => state.theme.darkMode); // get dark mode from Redux
+
   return (
     <DashboardProvider>
-      <div className="flex">
+      <div className={`flex transition-colors duration-300`}>
         <Sidebar />
 
         <div className="lg:ml-[250px] ml-0 flex-1">
           <Navbar />
 
-          <main className="pt-[70px] min-h-screen overflow-auto">
+          <main className="pt-[70px] min-h-screen overflow-auto transition-colors duration-300">
             <Routes>
               <Route path="overview" element={<OverView />} />
               <Route path="products" element={<Products />} />

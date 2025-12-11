@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const ProductModal = ({
   openModal,
@@ -9,54 +10,60 @@ const ProductModal = ({
   handleAddProduct,
   handleUpdateProduct,
 }) => {
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
   if (!openModal) return null;
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
-  // File upload handler
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const imageURL = URL.createObjectURL(file);
-    setFormData({
-      ...formData,
-      image: imageURL,
-      imageFile: file,
-    });
+    setFormData({ ...formData, image: imageURL, imageFile: file });
   };
 
+  const modalBgClass = darkMode
+    ? "bg-gray-900 text-white"
+    : "bg-white text-black";
+
+  const modalBgplaceholderClass = darkMode
+    ? "bg-gray-800 text-white"
+    : "bg-white text-black border border-gray-300 placeholder-gray-700";
+
   return (
-    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className="bg-white w-[500px] p-6 rounded-xl shadow-xl">
-        <h2 className="text-xl font-semibold mb-4 text-center">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex justify-center items-center z-50 animate-fade-in">
+      <div
+        className={`w-[90vw] md:w-[40vw] max-w-3xl  p-6 rounded-2xl shadow-2xl ${modalBgClass} overflow-y-auto`}
+      >
+        {/* Header */}
+        <h2 className="text-2xl font-bold mb-5 text-center">
           {isEditing ? "Update Product" : "Add New Product"}
         </h2>
 
+        {/* Form */}
         <div className="grid grid-cols-2 gap-4">
           <input
             name="sku"
             placeholder="SKU"
             value={formData.sku}
             onChange={handleChange}
-            className="col-span-2 p-2 border rounded"
+            className={modalBgplaceholderClass + " col-span-2 p-3 rounded-xl"}
           />
-
           <input
             name="name"
             placeholder="Product Name"
             value={formData.name}
             onChange={handleChange}
-            className="p-2 border rounded"
+            className={modalBgplaceholderClass + " col-span-2 p-3 rounded-xl"}
           />
-
           <select
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="p-2 border rounded"
+            className={modalBgplaceholderClass + " col-span-2 p-3 rounded-xl"}
           >
             <option value="">Select Category</option>
             <option value="Electronics">Electronics</option>
@@ -65,16 +72,14 @@ const ProductModal = ({
             <option value="Home">Home</option>
             <option value="Accessories">Accessories</option>
           </select>
-
           <input
             name="price"
             type="number"
             placeholder="Price"
             value={formData.price}
             onChange={handleChange}
-            className="p-2 border rounded"
+            className={modalBgplaceholderClass + " p-3 rounded-xl"}
           />
-
           <input
             name="stock"
             type="number"
@@ -82,57 +87,50 @@ const ProductModal = ({
             min="0"
             value={formData.stock}
             onChange={handleChange}
-            className="p-2 border rounded"
+            className={modalBgplaceholderClass + " p-3 rounded-xl"}
           />
-
           <input
             name="barcode"
             placeholder="Barcode"
             value={formData.barcode}
             onChange={handleChange}
-            className="col-span-2 p-2 border rounded"
+            className={modalBgplaceholderClass + " col-span-2 p-3 rounded-xl"}
           />
 
-          {/* File Upload */}
+          {/* Image Upload */}
           <div className="col-span-2 flex flex-col">
-            <label className="text-sm font-medium mb-1">Upload Image *</label>
+            <label className="text-sm font-medium mb-2">Upload Image *</label>
             <input
               type="file"
               accept="image/*"
               onChange={handleImageUpload}
-              className="p-2 border rounded"
+              className={
+                modalBgplaceholderClass +
+                " col-span-2 p-3 rounded-xl cursor-pointer"
+              }
             />
           </div>
-
-          {formData.image && (
-            <img
-              src={formData.image}
-              alt="preview"
-              className="col-span-2 w-24 h-24 object-cover rounded mx-auto mt-2"
-            />
-          )}
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-end gap-3 mt-5">
+        <div className="flex justify-end gap-4 mt-6">
           <button
             onClick={() => setOpenModal(false)}
-            className="bg-gray-300 px-4 py-2 rounded"
+            className="bg-gray-500 hover:bg-gray-600 text-white cursor-pointer px-5 py-2 rounded-xl font-semibold transition transform hover:scale-105"
           >
             Cancel
           </button>
-
           {isEditing ? (
             <button
               onClick={handleUpdateProduct}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              className="bg-green-600 hover:bg-green-700 text-white cursor-pointer px-5 py-2 rounded-xl font-semibold transition transform hover:scale-105"
             >
               Update
             </button>
           ) : (
             <button
               onClick={handleAddProduct}
-              className="bg-black text-white px-4 py-2 rounded"
+              className="bg-green-600 hover:bg-green-700 text-white cursor-pointer px-5 py-2 rounded-xl font-semibold transition transform hover:scale-105"
             >
               Save
             </button>

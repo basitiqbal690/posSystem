@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const UserModal = ({
   openModal,
@@ -9,15 +10,31 @@ const UserModal = ({
   handleAddUser,
   handleUpdateUser,
 }) => {
+  const darkMode = useSelector((state) => state.theme.darkMode); // Get theme from Redux
+
   if (!openModal) return null;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const inputClass = `col-span-2 p-2 border rounded w-full ${
+    darkMode
+      ? "bg-gray-700 border-gray-500 text-black"
+      : "bg-white border-gray-300 text-black"
+  }`;
+
+  const selectClass = `p-2 border rounded w-full ${
+    darkMode
+      ? "bg-gray-700 border-gray-500 text-black"
+      : "bg-white border-gray-300 text-black"
+  }`;
+
+  const modalBg = darkMode ? "bg-gray-800 text-white" : "bg-white text-black";
+
   return (
     <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className="bg-white w-[450px] p-6 rounded-xl shadow-xl">
+      <div className={`w-[450px] p-6 rounded-xl shadow-xl ${modalBg}`}>
         <h2 className="text-xl font-semibold mb-6 text-center">
           {isEditing ? "Update User" : "Add New User"}
         </h2>
@@ -28,7 +45,7 @@ const UserModal = ({
             placeholder="User SKU"
             value={formData.sku}
             onChange={handleChange}
-            className="col-span-2 p-2 border rounded"
+            className={inputClass}
           />
 
           <input
@@ -36,7 +53,7 @@ const UserModal = ({
             placeholder="Full Name"
             value={formData.name}
             onChange={handleChange}
-            className="col-span-2 p-2 border rounded"
+            className={inputClass}
           />
 
           <input
@@ -44,14 +61,14 @@ const UserModal = ({
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="col-span-2 p-2 border rounded"
+            className={inputClass}
           />
 
           <select
             name="role"
             value={formData.role}
             onChange={handleChange}
-            className="col-span-1 p-2 border rounded"
+            className={selectClass}
           >
             <option value="">Select Role</option>
             <option value="Admin">Admin</option>
@@ -63,7 +80,7 @@ const UserModal = ({
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="col-span-1 p-2 border rounded"
+            className={selectClass}
           >
             <option value="">Status</option>
             <option value="Active">Active</option>
@@ -74,7 +91,7 @@ const UserModal = ({
         <div className="flex justify-end gap-3 mt-5">
           <button
             onClick={() => setOpenModal(false)}
-            className="bg-gray-300 px-4 py-2 rounded"
+            className="bg-gray-500 hover:bg-gray-600 text-white cursor-pointer px-5 py-2 rounded-xl font-semibold transition transform hover:scale-105"
           >
             Cancel
           </button>
@@ -82,14 +99,14 @@ const UserModal = ({
           {isEditing ? (
             <button
               onClick={handleUpdateUser}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              className="bg-green-600 hover:bg-green-700 text-white cursor-pointer px-5 py-2 rounded-xl font-semibold transition transform hover:scale-105"
             >
               Update
             </button>
           ) : (
             <button
               onClick={handleAddUser}
-              className="bg-black text-white px-4 py-2 rounded"
+              className="bg-green-600 hover:bg-green-700 text-white cursor-pointer px-5 py-2 rounded-xl font-semibold transition transform hover:scale-105"
             >
               Save
             </button>

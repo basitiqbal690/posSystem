@@ -4,15 +4,22 @@ import DashboardCard from "../components/DashboardCard";
 import SectionCard from "../components/SectionCard";
 import AlertCard from "../components/AlertCard";
 import { useDashboard } from "../context/DashboardContext";
+import { useSelector } from "react-redux";
 
 const OverView = () => {
   const { cards, sectionCards } = useDashboard();
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   return (
-    <div className="bg-gray-200 relative">
+    <div
+      className={`relative pb-6  ${
+        darkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
+      }`}
+    >
       <DashboardHeader
-        title="Dashboard Overview"
+        title="Dashboard "
         description="View key metrics and system overview"
+        // className={darkMode ? "text-white" : "text-black"} // optional for header text
       />
 
       {/* Cards */}
@@ -30,7 +37,7 @@ const OverView = () => {
       </div>
 
       {/* Alert */}
-      <AlertCard />
+      <AlertCard darkMode={darkMode} />
     </div>
   );
 };

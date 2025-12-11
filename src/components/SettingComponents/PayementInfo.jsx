@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -10,7 +11,6 @@ let dataObj = [
   { id: 4, heading: "Mobile Payment" },
 ];
 
-// Validation schema
 const schema = yup.object().shape({
   lowStock: yup
     .number()
@@ -20,7 +20,8 @@ const schema = yup.object().shape({
 });
 
 const PayementInfo = () => {
-  // Payment method toggles
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
   const [settings, setSettings] = useState({
     1: false,
     2: false,
@@ -28,15 +29,11 @@ const PayementInfo = () => {
     4: false,
   });
 
-  // Notification Toggles (Independent)
   const [includeTax, setIncludeTax] = useState(false);
   const [dailyReport, setDailyReport] = useState(false);
 
   const handleToggle = (id) => {
-    setSettings((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setSettings((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const {
@@ -48,33 +45,43 @@ const PayementInfo = () => {
   });
 
   const onSubmit = (data) => {
-    console.log({
-      paymentMethods: settings,
-      includeTax,
-      dailyReport,
-      ...data,
-    });
-
+    console.log({ paymentMethods: settings, includeTax, dailyReport, ...data });
     alert("Settings saved successfully!");
   };
+
+  const cardClass = `rounded-xl shadow p-6 ${
+    darkMode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"
+  }`;
+
+  const toggleTrackClass = (checked) =>
+    `w-11 h-6 rounded-full transition-colors ${
+      checked ? "bg-black" : darkMode ? "bg-gray-600" : "bg-gray-300"
+    }`;
+
+  const toggleThumbClass = (checked) =>
+    `absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+      checked ? "translate-x-full" : ""
+    }`;
 
   return (
     <>
       {/* Payment Methods Section */}
-      <div className="bg-white rounded-xl shadow p-6">
+      <div className={cardClass}>
         <h2 className="text-lg font-semibold mb-2 flex items-center gap-2">
           <span>💳</span> Payment Methods
         </h2>
-        <p className="text-gray-500 mb-6">Enable or disable payment methods</p>
+        <p className={`${darkMode ? "text-gray-400" : "text-gray-500"} mb-6`}>
+          Enable or disable payment methods
+        </p>
 
         {dataObj.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-between bg-gray-200 p-4 rounded mt-3"
+            className={`flex items-center justify-between p-4 rounded mt-3 ${
+              darkMode ? "bg-gray-700" : "bg-gray-200"
+            }`}
           >
             <label className="font-medium">{item.heading}</label>
-
-            {/* Toggle */}
             <label className="relative inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
@@ -82,42 +89,41 @@ const PayementInfo = () => {
                 onChange={() => handleToggle(item.id)}
                 className="sr-only peer"
               />
-
-              {/* Track */}
-              <div className="w-11 h-6 bg-gray-300 rounded-full transition-colors peer-checked:bg-black"></div>
-
-              {/* Thumb */}
-              <div
-                className={`absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                  settings[item.id] ? "translate-x-full" : ""
-                }`}
-              ></div>
+              <div className={toggleTrackClass(settings[item.id])}></div>
+              <div className={toggleThumbClass(settings[item.id])}></div>
             </label>
           </div>
         ))}
       </div>
 
       {/* Notifications Section */}
-      <div className="bg-white rounded-xl shadow p-6 mt-4">
+      <div className={`${cardClass} mt-4`}>
         <h2 className="text-lg font-semibold mb-2 flex items-center gap-2">
           <span>🔔</span> Notifications
         </h2>
-        <p className="text-gray-500 mb-6">
+        <p className={`${darkMode ? "text-gray-400" : "text-gray-500"} mb-6`}>
           Configure system notifications and alerts
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Include Tax Toggle */}
-          <div className="flex items-center justify-between bg-gray-100 p-4 rounded">
+          {/* Include Tax */}
+          <div
+            className={`flex items-center justify-between p-4 rounded ${
+              darkMode ? "bg-gray-700" : "bg-gray-100"
+            }`}
+          >
             <div>
               <label className="font-medium">
                 Include tax in product prices
               </label>
-              <p className="text-gray-500 text-sm">
+              <p
+                className={`${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                } text-sm`}
+              >
                 Tax will be included in displayed prices
               </p>
             </div>
-
             <label className="relative inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
@@ -125,12 +131,8 @@ const PayementInfo = () => {
                 onChange={() => setIncludeTax(!includeTax)}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-300 rounded-full transition-colors peer-checked:bg-black"></div>
-              <div
-                className={`absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                  includeTax ? "translate-x-full" : ""
-                }`}
-              ></div>
+              <div className={toggleTrackClass(includeTax)}></div>
+              <div className={toggleThumbClass(includeTax)}></div>
             </label>
           </div>
 
@@ -141,7 +143,9 @@ const PayementInfo = () => {
               type="number"
               min="0"
               {...register("lowStock")}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : ""
+              }`}
               placeholder="10"
             />
             {errors.lowStock && (
@@ -151,15 +155,22 @@ const PayementInfo = () => {
             )}
           </div>
 
-          {/* Daily Report Toggle */}
-          <div className="flex items-center justify-between bg-gray-100 p-4 rounded mt-4">
+          {/* Daily Report */}
+          <div
+            className={`flex items-center justify-between p-4 rounded mt-4 ${
+              darkMode ? "bg-gray-700" : "bg-gray-100"
+            }`}
+          >
             <div>
               <label className="font-medium">Daily Sales Report</label>
-              <p className="text-gray-500 text-sm">
+              <p
+                className={`${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                } text-sm`}
+              >
                 Receive daily sales summary via email
               </p>
             </div>
-
             <label className="relative inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
@@ -167,12 +178,8 @@ const PayementInfo = () => {
                 onChange={() => setDailyReport(!dailyReport)}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-300 rounded-full transition-colors peer-checked:bg-black"></div>
-              <div
-                className={`absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                  dailyReport ? "translate-x-full" : ""
-                }`}
-              ></div>
+              <div className={toggleTrackClass(dailyReport)}></div>
+              <div className={toggleThumbClass(dailyReport)}></div>
             </label>
           </div>
 

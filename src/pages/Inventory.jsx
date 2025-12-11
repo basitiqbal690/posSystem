@@ -9,17 +9,15 @@ import { MdDeleteOutline } from "react-icons/md";
 const Inventory = () => {
   const dispatch = useDispatch();
 
-  // Get products and categories from Redux
   const productList = useSelector((state) => state.productsAdd.products);
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
-  const [filter, setFilter] = useState("all"); // all, low, out
+  const [filter, setFilter] = useState("all");
 
-  // Stock modal state
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
 
-  // Filter products based on stock
   const filteredProducts = productList.filter((p) => {
     if (filter === "all") return true;
     if (filter === "low") return Number(p.stock) > 0 && Number(p.stock) <= 10;
@@ -27,14 +25,12 @@ const Inventory = () => {
     return true;
   });
 
-  // Open modal for add/remove stock
   const handleStockUpdate = (product, remove = false) => {
     setSelectedProduct(product);
     setIsRemove(remove);
     setModalOpen(true);
   };
 
-  // Update stock
   const onUpdateStock = (quantity, remove) => {
     const qtyChange = remove ? -Number(quantity) : Number(quantity);
     dispatch(
@@ -46,65 +42,80 @@ const Inventory = () => {
   };
 
   return (
-    <div className="bg-gray-200 min-h-screen">
+    <div
+      className={`${
+        darkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
+      } min-h-screen`}
+    >
       <DashboardHeader
         title="Inventory Management"
         description="Monitor and adjust product stock levels"
       />
 
       {/* Filter Buttons */}
-      <div className="flex ml-8 mt-6 gap-4 border-b border-gray-300 mb-5">
-        <button
-          onClick={() => setFilter("all")}
-          className={`px-4 py-2 cursor-pointer ${
-            filter === "all"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500 hover:text-black"
-          }`}
-        >
-          All Products
-        </button>
-        <button
-          onClick={() => setFilter("low")}
-          className={`px-4 py-2 cursor-pointer ${
-            filter === "low"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500 hover:text-black"
-          }`}
-        >
-          Low Stock
-        </button>
-        <button
-          onClick={() => setFilter("out")}
-          className={`px-4 py-2 cursor-pointer ${
-            filter === "out"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500 hover:text-black"
-          }`}
-        >
-          Out of Stock
-        </button>
+      <div className="flex ml-8 mt-6 gap-4  border-gray-400 pb-1">
+        {[
+          { key: "all", label: "All Products" },
+          { key: "low", label: "Low Stock" },
+          { key: "out", label: "Out of Stock" },
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setFilter(tab.key)}
+            className={`px-4 py-2 cursor-pointer ${
+              filter === tab.key
+                ? darkMode
+                  ? " border-white font-semibold"
+                  : " border-black font-semibold"
+                : darkMode
+                ? "text-gray-300"
+                : "text-gray-600"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Inventory Table */}
-      <div className="m-6 p-5 bg-white rounded-xl shadow overflow-x-auto">
+      <div
+        className={`
+          m-6 p-5 rounded-xl shadow overflow-x-auto 
+          ${darkMode ? "bg-gray-900 text-white" : "bg-white text-black"}
+        `}
+      >
         <table className="min-w-full text-left border-separate border-spacing-0">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="px-6 py-3 text-gray-700 font-medium">Product</th>
-              <th className="px-6 py-3 text-gray-700 font-medium">SKU</th>
-              <th className="px-6 py-3 text-gray-700 font-medium">Category</th>
-              <th className="px-6 py-3 text-gray-700 font-medium">
-                Current Stock
-              </th>
-              <th className="px-6 py-3 text-gray-700 font-medium">Status</th>
-              <th className="px-6 py-3 text-gray-700 font-medium">Actions</th>
+            <tr className={darkMode ? "bg-gray-900" : "bg-gray-100"}>
+              {[
+                "Product",
+                "SKU",
+                "Category",
+                "Current Stock",
+                "Status",
+                "Actions",
+              ].map((col) => (
+                <th
+                  key={col}
+                  className={`text-left border-b pt-3 pb-3 px-4
+                  ${darkMode ? "border-gray-700" : "border-gray-300"}
+                `}
+                >
+                  {col}
+                </th>
+              ))}
             </tr>
           </thead>
+
           <tbody>
             {filteredProducts.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-4 text-center text-gray-400">
+                <td
+                  colSpan={6}
+                  className={` py-4 text-center ${
+                    darkMode ? "text-gray-400" : "text-gray-500"
+                  }`}
+                >
                   No products found.
                 </td>
               </tr>
@@ -118,24 +129,41 @@ const Inventory = () => {
                     : "In Stock";
 
                 return (
-                  <tr
-                    key={product.sku}
-                    className="hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <td className="px-6 py-4">{product.name}</td>
-                    <td className="px-6 py-4">{product.sku}</td>
-                    <td className="px-6 py-4">{product.category}</td>
-                    <td className="px-6 py-4">{product.stock}</td>
-                    <td className="px-6 py-4">{status}</td>
+                  <tr key={product.sku}>
+                    <td className="px-4 py-4">{product.name}</td>
+                    <td className="px-4 py-4">{product.sku}</td>
+                    <td className="px-4 py-4">{product.category}</td>
+                    <td className="px-4 py-4">{product.stock}</td>
+
+                    <td
+                      className={`px-6 py-4 font-semibold ${
+                        status === "Out of Stock"
+                          ? "text-red-500"
+                          : status === "Low Stock"
+                          ? "text-yellow-600"
+                          : "text-green-600"
+                      }`}
+                    >
+                      {status}
+                    </td>
+
                     <td className="px-6 py-4 flex gap-3">
                       <CiEdit
-                        className="text-blue-600 cursor-pointer hover:text-blue-800 transition"
                         size={22}
+                        className={
+                          darkMode
+                            ? "text-blue-400 cursor-pointer"
+                            : "text-blue-600 cursor-pointer"
+                        }
                         onClick={() => handleStockUpdate(product, false)}
                       />
                       <MdDeleteOutline
-                        className="text-red-500 cursor-pointer hover:text-red-700 transition"
                         size={22}
+                        className={
+                          darkMode
+                            ? "text-red-400 cursor-pointer"
+                            : "text-red-500 cursor-pointer"
+                        }
                         onClick={() => handleStockUpdate(product, true)}
                       />
                     </td>

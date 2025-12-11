@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useSelector } from "react-redux";
 
 const schema = yup.object().shape({
   name: yup.string().optional(),
@@ -26,6 +27,8 @@ const schema = yup.object().shape({
 });
 
 const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
+  const darkMode = useSelector((state) => state.theme.darkMode); // boolean
+
   const {
     register,
     handleSubmit,
@@ -40,16 +43,14 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
       name: "",
       phone: "",
       notes: "",
-      amountPaid: "", // start empty
-      totalAmount, // used for validation
+      amountPaid: "",
+      totalAmount,
     },
   });
 
   const paymentMethod = watch("paymentMethod");
   const amountPaidRaw = watch("amountPaid");
   const amountPaid = parseFloat(amountPaidRaw) || 0;
-
-  // Change is only calculated if amountPaid >= totalAmount
   const change = amountPaid >= totalAmount ? amountPaid - totalAmount : 0;
 
   useEffect(() => {
@@ -66,22 +67,32 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
     onComplete(data);
   };
 
-  const presetAmounts = [2000, 5000, 10000, 20000]; // example PKR preset buttons
+  const presetAmounts = [2000, 5000, 10000, 20000];
 
   return (
     <div className="fixed inset-0 flex justify-center items-start pt-10 z-50">
       <div className="absolute inset-0 backdrop-blur-md"></div>
 
-      <div className="relative bg-white rounded-lg w-[600px] max-h-[80vh] overflow-y-auto shadow-lg p-6">
-        <h2 className="text-blue-600 font-semibold text-lg mb-4">
+      <div
+        className={`relative rounded-lg w-[600px] max-h-[80vh] overflow-y-auto shadow-lg p-6 transition-colors ${
+          darkMode ? "bg-gray-800 text-gray-200" : "bg-white text-black"
+        }`}
+      >
+        <h2
+          className={`"text-blue-600 font-semibold text-lg mb-4 ${
+            darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+          }`}
+        >
           Complete Payment
         </h2>
 
-        <div className="bg-blue-100 rounded-md p-4 text-center mb-6">
-          <p className="text-gray-700">Total Amount</p>
-          <p className="text-2xl font-bold text-blue-800">
-            PKR {totalAmount.toFixed(2)}
-          </p>
+        <div
+          className={`rounded-md p-4 text-center mb-6 ${
+            darkMode ? "bg-gray-700 text-white" : "bg-blue-100 text-blue-800"
+          }`}
+        >
+          <p>Total Amount</p>
+          <p className={`text-2xl font-bold`}>PKR {totalAmount.toFixed(2)}</p>
         </div>
 
         <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
@@ -99,7 +110,9 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
                   className={`border rounded-md flex-1 py-2 text-center ${
                     paymentMethod === method
                       ? "border-blue-600 bg-blue-200 font-semibold"
-                      : "border-gray-300"
+                      : darkMode
+                      ? "border-gray-600 bg-gray-700 text-black"
+                      : "border-gray-300 bg-white text-black"
                   }`}
                 >
                   {method}
@@ -122,19 +135,25 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
                     type="number"
                     step="0.01"
                     {...register("amountPaid")}
-                    className="w-full border border-gray-300 rounded-md p-2"
+                    className={`w-full border rounded-md p-2 ${
+                      darkMode
+                        ? "border-gray-600 bg-gray-700 text-gray-800"
+                        : "border-gray-300 bg-white text-black"
+                    }`}
                     placeholder="Enter amount paid"
                   />
                   <button
                     type="button"
-                    className="border rounded-md px-3 flex items-center justify-center"
+                    className={`border rounded-md px-3 flex items-center justify-center ${
+                      darkMode
+                        ? "border-gray-600 bg-gray-700 text-gray-800"
+                        : "border-gray-300 bg-white text-black"
+                    }`}
                     onClick={() =>
                       setValue(
                         "amountPaid",
                         (amountPaid + totalAmount).toFixed(2),
-                        {
-                          shouldValidate: true,
-                        }
+                        { shouldValidate: true }
                       )
                     }
                     title="Add total amount"
@@ -154,7 +173,11 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
                   <button
                     key={amt}
                     type="button"
-                    className="border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100"
+                    className={`border rounded-md px-4 py-2 ${
+                      darkMode
+                        ? "border-gray-600 bg-gray-700 text-gray-800 hover:bg-gray-600"
+                        : "border-gray-300 bg-white hover:bg-gray-100"
+                    }`}
                     onClick={() =>
                       setValue("amountPaid", (amountPaid + amt).toFixed(2), {
                         shouldValidate: true,
@@ -166,9 +189,14 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
                 ))}
               </div>
 
-              {/* Change only shows if amountPaid >= totalAmount */}
               {amountPaid >= totalAmount && (
-                <div className="bg-green-100 border border-green-300 rounded-md p-4 text-green-700 font-semibold">
+                <div
+                  className={`rounded-md p-4 font-semibold ${
+                    darkMode
+                      ? "bg-green-900 border-green-700 text-green-300"
+                      : "bg-green-100 border-green-300 text-green-700"
+                  }`}
+                >
                   <div className="text-sm mb-1">Change</div>
                   <div className="text-2xl font-bold">
                     PKR {change.toFixed(2)}
@@ -184,7 +212,11 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
               type="text"
               {...register("name")}
               placeholder="Customer name"
-              className="w-full border border-gray-300 rounded-md p-2"
+              className={`w-full border rounded-md p-2 ${
+                darkMode
+                  ? "border-gray-600 bg-gray-700 text-gray-800"
+                  : "border-gray-300 bg-white text-black"
+              }`}
             />
           </div>
 
@@ -194,7 +226,11 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
               type="text"
               {...register("phone")}
               placeholder="Phone number"
-              className="w-full border border-gray-300 rounded-md p-2"
+              className={`w-full border rounded-md p-2 ${
+                darkMode
+                  ? "border-gray-600 bg-gray-700 text-gray-800"
+                  : "border-gray-300 bg-white text-black"
+              }`}
             />
             {errors.phone && (
               <p className="text-red-500 text-sm mt-1">
@@ -208,8 +244,12 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
             <textarea
               {...register("notes")}
               placeholder="Add any notes..."
-              className="w-full border border-gray-300 rounded-md p-2 resize-none"
               rows={3}
+              className={`w-full border rounded-md p-2 resize-none ${
+                darkMode
+                  ? "border-gray-600 bg-gray-700 text-gray-800"
+                  : "border-gray-300 bg-white text-black"
+              }`}
             />
           </div>
 
@@ -217,13 +257,13 @@ const CheckoutModal = ({ totalAmount, onClose, onComplete }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border rounded hover:bg-gray-100 hover:scale-101 cursor-pointer"
+              className="bg-gray-500 hover:bg-gray-600 text-white cursor-pointer px-5 py-2 rounded-xl font-semibold transition transform hover:scale-105"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 hover:scale-101 cursor-pointer "
+              className="bg-green-600 hover:bg-green-700 text-white cursor-pointer px-5 py-2 rounded-xl font-semibold transition transform hover:scale-105"
             >
               Complete Payment
             </button>

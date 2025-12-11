@@ -1,20 +1,30 @@
 import React from "react";
 import UserRow from "./UserRow";
 
-const UserTable = ({ userList, openEditModal, removeUser, listName }) => {
+const UserTable = ({
+  userList,
+  openEditModal,
+  removeUser,
+  listName,
+  darkMode,
+}) => {
+  const tableBg = darkMode ? "bg-gray-800 text-white" : "bg-white text-black";
+  const headerBg = darkMode ? "" : "bg-gray-100";
+  const textGray = darkMode ? "text-gray-300" : "text-gray-400";
+
   return (
-    <div className="mt-4 bg-white p-6 rounded-2xl shadow-lg">
+    <div className={`mt-4 p-6 rounded-2xl shadow-lg ${tableBg}`}>
       <h2 className="text-2xl font-semibold mb-6">{listName}</h2>
 
       {userList.length === 0 ? (
-        <p className="text-gray-400 text-lg text-center py-10">
+        <p className={`${textGray} text-lg text-center py-10`}>
           No users added yet...
         </p>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full text-left">
             <thead>
-              <tr className="bg-gray-100 rounded-t-2xl">
+              <tr className={`${headerBg} rounded-t-2xl`}>
                 <th className="px-6 py-3">SKU</th>
                 <th className="px-6 py-3">Name</th>
                 <th className="px-6 py-3">Email</th>
@@ -31,6 +41,7 @@ const UserTable = ({ userList, openEditModal, removeUser, listName }) => {
                   item={item}
                   openEditModal={openEditModal}
                   removeUser={removeUser}
+                  darkMode={darkMode} // Pass darkMode to each row
                 />
               ))}
             </tbody>

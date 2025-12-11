@@ -22,13 +22,13 @@ const Pos = () => {
   const [activeTab, setActiveTab] = useState("Allproducts");
   const [showModal, setShowModal] = useState(false);
 
-  const openCheckoutModal = () => setShowModal(true);
-  const closeCheckoutModal = () => setShowModal(false);
-
+  const darkMode = useSelector((state) => state.theme.darkMode); // Dark mode state
   const cart = useSelector((state) => state.cart.cartItems);
   const taxRate = useSelector((state) => state.cart.taxRate);
-
   const dispatch = useDispatch();
+
+  const openCheckoutModal = () => setShowModal(true);
+  const closeCheckoutModal = () => setShowModal(false);
 
   const handleDecreaseQty = (item) => {
     if (item.quantity > 1) {
@@ -48,79 +48,47 @@ const Pos = () => {
   const tax = (subtotal * taxRate) / 100;
   const total = subtotal + tax;
 
-  // ** FIX: Add this missing function **
   const handleCompletePayment = (data) => {
     console.log("Payment completed with data:", data);
-    // Here you can add real payment processing and cart clearing if needed.
     closeCheckoutModal();
   };
 
   return (
-    <div className="relative bg-gray-100 min-h-screen">
+    <div
+      className={`${
+        darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"
+      } relative min-h-screen`}
+    >
       {/* TABS */}
-      <div className="flex border-b border-gray-300 mb-5  px-10 gap-5 pt-10">
-        <button
-          onClick={() => setActiveTab("Allproducts")}
-          className={`px-4 pb-2 ${
-            activeTab === "Allproducts"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500 hover:text-black"
-          }`}
-        >
-          All products
-        </button>
-        <button
-          onClick={() => setActiveTab("Electronics")}
-          className={`px-4 pb-2 ${
-            activeTab === "Electronics"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500 hover:text-black"
-          }`}
-        >
-          Electronics
-        </button>
-        <button
-          onClick={() => setActiveTab("Appliances")}
-          className={`px-4 pb-2 ${
-            activeTab === "Appliances"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500 hover:text-black"
-          }`}
-        >
-          Appliances
-        </button>
-        <button
-          onClick={() => setActiveTab("Fitness")}
-          className={`px-4 pb-2 ${
-            activeTab === "Fitness"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500 hover:text-black"
-          }`}
-        >
-          Fitness
-        </button>
-        <button
-          onClick={() => setActiveTab("Home")}
-          className={`px-4 pb-2 ${
-            activeTab === "Home"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500 hover:text-black"
-          }`}
-        >
-          Home
-        </button>
-        <button
-          onClick={() => setActiveTab("Accessories")}
-          className={`px-4 pb-2  ${
-            activeTab === "Accessories"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500 hover:text-black"
-          }`}
-        >
-          Accessories
-        </button>
-        {/* </div> */}
+      <div
+        className={`flex border-b mb-5 px-10 gap-5 pt-10 ${
+          darkMode ? "border-gray-700" : "border-gray-300"
+        }`}
+      >
+        {[
+          "Allproducts",
+          "Electronics",
+          "Appliances",
+          "Fitness",
+          "Home",
+          "Accessories",
+        ].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 pb-2 ${
+              activeTab === tab
+                ? "border-b-2 border-black font-semibold"
+                : darkMode
+                ? "text-gray-400 hover:text-white"
+                : "text-gray-500 hover:text-black"
+            }`}
+          >
+            {tab === "Allproducts" ? "All Products" : tab}
+          </button>
+        ))}
       </div>
+
       {/* TAB CONTENT */}
       <div
         className={`px-6 transition-all duration-300 ${
@@ -137,13 +105,24 @@ const Pos = () => {
 
       {/* RIGHT CART PANEL */}
       {cart.length > 0 && (
-        <div className="fixed right-0 top-[90px] h-[calc(100vh-90px)] w-[350px] bg-white shadow-xl p-5 border-l z-50 overflow-y-auto">
+        <div
+          className={`fixed right-0 top-[90px] h-[calc(100vh-90px)] w-[350px] p-5 border-l shadow-xl overflow-y-auto z-50 transition-colors
+            ${
+              darkMode
+                ? "bg-gray-800 border-gray-700 text-white"
+                : "bg-white border-gray-300 text-black"
+            }
+          `}
+        >
           <h2 className="font-bold text-xl mb-4">Cart ({cart.length})</h2>
+
           <div className="space-y-4 max-h-[33vh] overflow-y-auto">
             {cart.map((item) => (
               <div
                 key={item.sku}
-                className="flex justify-between items-center bg-gray-100 p-3 rounded-lg"
+                className={`flex justify-between items-center p-3 rounded-lg transition
+                  ${darkMode ? "bg-gray-700" : "bg-gray-100"}
+                `}
               >
                 <div>
                   <p className="font-semibold">{item.name}</p>
@@ -151,7 +130,9 @@ const Pos = () => {
                   <div className="flex gap-2 mt-2">
                     <button
                       onClick={() => handleDecreaseQty(item)}
-                      className="bg-gray-300 px-2 rounded"
+                      className={`px-2 rounded ${
+                        darkMode ? "bg-gray-600" : "bg-gray-300"
+                      }`}
                     >
                       -
                     </button>
@@ -166,7 +147,9 @@ const Pos = () => {
                           })
                         );
                       }}
-                      className="bg-gray-300 px-2 rounded"
+                      className={`px-2 rounded ${
+                        darkMode ? "bg-gray-600" : "bg-gray-300"
+                      }`}
                     >
                       +
                     </button>
@@ -179,7 +162,8 @@ const Pos = () => {
               </div>
             ))}
           </div>
-          <div className="mt-6 border-t pt-4">
+
+          <div className="mt-6 border-t pt-4 border-gray-400">
             <div className="flex justify-between">
               <span>Subtotal</span>
               <span>PKR {subtotal.toFixed(2)}</span>
@@ -192,6 +176,7 @@ const Pos = () => {
               <span>Total</span>
               <span>PKR {total.toFixed(2)}</span>
             </div>
+
             <button
               onClick={openCheckoutModal}
               className="bg-green-600 text-white mt-4 w-full py-3 rounded-lg hover:scale-101 cursor-pointer"
@@ -199,7 +184,6 @@ const Pos = () => {
               Proceed to Checkout
             </button>
 
-            {/* modal */}
             {showModal && (
               <CheckoutModal
                 totalAmount={total}

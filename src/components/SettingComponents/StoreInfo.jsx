@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useSelector } from "react-redux";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -22,6 +23,8 @@ const schema = yup.object().shape({
 });
 
 const StoreInfo = () => {
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
   const {
     register,
     handleSubmit,
@@ -35,23 +38,34 @@ const StoreInfo = () => {
     alert("Store settings saved successfully!");
   };
 
+  const inputBase = `w-full border rounded px-3 py-2 focus:outline-none focus:ring-2`;
+  const inputLight = "border-gray-300 bg-white text-black focus:ring-blue-400";
+  const inputDark =
+    "border-gray-600 bg-gray-700 text-white focus:ring-blue-500";
+
+  const bgCard = darkMode ? "bg-gray-800 text-white" : "bg-white text-black";
+  const textGray = darkMode ? "text-gray-300" : "text-gray-500";
+  const btnClass = darkMode
+    ? "bg-green-700 text-white hover:bg-green-600"
+    : "bg-black text-white hover:bg-gray-800";
+
   return (
-    <div className="bg-white rounded-xl shadow p-6">
+    <div className={`${bgCard} rounded-xl shadow p-6`}>
       <h2 className="text-lg font-semibold mb-2">Store Information</h2>
-      <p className="text-gray-500 mb-6">
+      <p className={`${textGray} mb-6`}>
         Configure your store details and contact information
       </p>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-2 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-6"
       >
-        {/* Store Name */}
+        {/* Row 1: Store Name | Phone Number */}
         <div className="flex flex-col">
           <label className="font-medium mb-1">Store Name *</label>
           <input
             {...register("storeName")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
             placeholder="Store Name"
           />
           {errors.storeName && (
@@ -61,12 +75,11 @@ const StoreInfo = () => {
           )}
         </div>
 
-        {/* Phone Number */}
         <div className="flex flex-col">
           <label className="font-medium mb-1">Phone Number *</label>
           <input
             {...register("phoneNumber")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
             placeholder="(555) 123-4567"
           />
           {errors.phoneNumber && (
@@ -76,12 +89,24 @@ const StoreInfo = () => {
           )}
         </div>
 
-        {/* Address (full width) */}
-        <div className="flex flex-col col-span-2">
+        {/* Row 2: Email | Address */}
+        <div className="flex flex-col">
+          <label className="font-medium mb-1">Email</label>
+          <input
+            {...register("email")}
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
+            placeholder="store@example.com"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div className="flex flex-col">
           <label className="font-medium mb-1">Address *</label>
           <input
             {...register("address")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
             placeholder="123 Main Street"
           />
           {errors.address && (
@@ -91,12 +116,12 @@ const StoreInfo = () => {
           )}
         </div>
 
-        {/* City */}
+        {/* Row 3: City | State */}
         <div className="flex flex-col">
           <label className="font-medium mb-1">City *</label>
           <input
             {...register("city")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
             placeholder="New York"
           />
           {errors.city && (
@@ -104,45 +129,30 @@ const StoreInfo = () => {
           )}
         </div>
 
-        {/* State */}
         <div className="flex flex-col">
           <label className="font-medium mb-1">State</label>
           <input
             {...register("state")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
             placeholder="NY"
           />
         </div>
 
-        {/* Zip Code */}
+        {/* Row 4: Zip Code | Website */}
         <div className="flex flex-col">
           <label className="font-medium mb-1">Zip Code</label>
           <input
             {...register("zipCode")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
             placeholder="10001"
           />
         </div>
 
-        {/* Email */}
-        <div className="flex flex-col">
-          <label className="font-medium mb-1">Email</label>
-          <input
-            {...register("email")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="store@example.com"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-          )}
-        </div>
-
-        {/* Website */}
         <div className="flex flex-col">
           <label className="font-medium mb-1">Website</label>
           <input
             {...register("website")}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
             placeholder="www.mystore.com"
           />
           {errors.website && (
@@ -152,12 +162,9 @@ const StoreInfo = () => {
           )}
         </div>
 
-        {/* Submit Button (full width) */}
-        <div className="col-span-2 flex justify-start mt-4">
-          <button
-            type="submit"
-            className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
-          >
+        {/* Submit Button */}
+        <div className="sm:col-span-2 flex justify-start mt-4">
+          <button type="submit" className={`${btnClass} px-6 py-2 rounded`}>
             Save Store Settings
           </button>
         </div>

@@ -11,7 +11,8 @@ import CategoryTable from "../components/CategoryTable";
 
 const Categories = () => {
   const dispatch = useDispatch();
-  const categoryList = useSelector((state) => state.categoriesAdd.categories); // fixed selector
+  const darkMode = useSelector((state) => state.theme.darkMode);
+  const categoryList = useSelector((state) => state.categoriesAdd.categories);
 
   const [openModal, setOpenModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +28,7 @@ const Categories = () => {
     setIsEditing(false);
     setOpenModal(true);
     setFormData({
-      sku: Date.now().toString(), // generate unique SKU for category
+      sku: Date.now().toString(),
       name: "",
       Description: "",
     });
@@ -43,18 +44,11 @@ const Categories = () => {
   const handleAddCategory = () => {
     dispatch(addCategory(formData));
     setOpenModal(false);
-    setFormData({
-      sku: "",
-      name: "",
-      Description: "",
-    });
   };
 
   const handleUpdateCategory = () => {
     dispatch(updateCategoryInCart({ originalSKU, updatedData: formData }));
     setOpenModal(false);
-    setIsEditing(false);
-    setOriginalSKU("");
   };
 
   const handleDeleteCategory = (sku) => {
@@ -62,21 +56,39 @@ const Categories = () => {
   };
 
   return (
-    <div className="bg-gray-200 min-h-screen">
+    <div
+      className={`${
+        darkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
+      } min-h-screen`}
+    >
       <div className="mt-5 pl-7 pt-7">
         <h1 className="font-semibold text-2xl">Category Management</h1>
-        <p className="text-gray-500 text-xl">Create and manage categories</p>
+        <p
+          className={`${darkMode ? "text-gray-300" : "text-gray-500"} text-xl`}
+        >
+          Create and manage categories
+        </p>
       </div>
 
-      <div className="m-6 p-5 bg-white rounded-xl flex justify-between shadow">
+      <div
+        className={`${
+          darkMode ? "bg-gray-900" : "bg-white"
+        } m-6 p-5 rounded-xl flex justify-between shadow`}
+      >
         <div>
           <h1 className="font-semibold text-xl">Category Management</h1>
-          <p className="text-gray-500 text-xl">Create and manage categories</p>
+          <p
+            className={`${
+              darkMode ? "text-gray-300" : "text-gray-500"
+            } text-xl`}
+          >
+            Create and manage categories
+          </p>
         </div>
 
         <button
           onClick={openAddModal}
-          className="bg-black text-white px-6 py-4 rounded-xl hover:scale-95 transition cursor-pointer"
+          className="bg-gray-800 text-white px-6 py-4 rounded-xl hover:scale-105 cursor-pointer"
         >
           + Add Category
         </button>
