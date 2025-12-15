@@ -12,36 +12,53 @@ const CategoryTable = ({
 
   return (
     <div
-      className={`${
-        darkMode ? "bg-gray-800 text-white" : "bg-white"
-      } m-6 p-6 rounded-2xl shadow-lg`}
+      className={`
+        m-4 sm:m-6 p-4 sm:p-6 rounded-2xl shadow-lg 
+        ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}
+      `}
     >
-      <h2 className="text-2xl font-semibold mb-6">{listName}</h2>
+      {/* Title */}
+      <h2 className="lg:text-xl sm:text-lg font-semibold mb-4 sm:mb-6">
+        {listName}
+      </h2>
 
+      {/* No categories */}
       {categoryList.length === 0 ? (
         <p
           className={`${
-            darkMode ? "text-gray-400" : "text-gray-400"
+            darkMode ? "text-gray-300" : "text-gray-500"
           } text-lg text-center py-10`}
         >
           No categories added yet...
         </p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-left">
+        <div className="overflow-x-auto w-full">
+          <table className="min-w-full border-collapse">
             <thead>
               <tr
                 className={`text-left border-b 
                   ${darkMode ? "border-gray-700" : "border-gray-300"}
                 `}
               >
-                <th className="px-6 py-3 text-sm font-semibold uppercase tracking-wider">
+                <th
+                  className={`px-4 sm:px-6 py-3 text-xs sm:text-sm font-semibold uppercase
+                    ${darkMode ? "text-white" : "text-black"}
+                  `}
+                >
                   Name
                 </th>
-                <th className="px-6 py-3 text-sm font-semibold uppercase tracking-wider">
+                <th
+                  className={`px-4 sm:px-6 py-3 text-xs sm:text-sm font-semibold uppercase
+                    ${darkMode ? "text-white" : "text-black"}
+                  `}
+                >
                   Description
                 </th>
-                <th className="px-6 py-3 text-sm font-semibold uppercase tracking-wider text-center">
+                <th
+                  className={`px-4 sm:px-6 py-3 text-xs sm:text-sm font-semibold uppercase text-center
+                    ${darkMode ? "text-white" : "text-black"}
+                  `}
+                >
                   Actions
                 </th>
               </tr>

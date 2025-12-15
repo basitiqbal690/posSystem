@@ -65,7 +65,9 @@ const StoreInfo = () => {
           <label className="font-medium mb-1">Store Name *</label>
           <input
             {...register("storeName")}
-            className={`${inputBase} ${darkMode ? inputDark : inputLight}`}
+            className={`${inputBase} ${
+              darkMode ? " text-black" : "bg-black text-black"
+            }`}
             placeholder="Store Name"
           />
           {errors.storeName && (

@@ -12,18 +12,17 @@ const OverView = () => {
 
   return (
     <div
-      className={`relative pb-6  ${
+      className={`relative pb-6 w-full overflow-x-hidden min-h-screen ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
       }`}
     >
       <DashboardHeader
         title="Dashboard "
         description="View key metrics and system overview"
-        // className={darkMode ? "text-white" : "text-black"} // optional for header text
       />
 
       {/* Cards */}
-      <div className="pt-9 pb-2 pl-1 flex flex-wrap">
+      <div className="mt-8 px-4 flex flex-wrap gap-2 sm:pb-4">
         {cards.map((_, index) => (
           <DashboardCard key={index} index={index} />
         ))}
@@ -37,7 +36,9 @@ const OverView = () => {
       </div>
 
       {/* Alert */}
-      <AlertCard darkMode={darkMode} />
+      <div className="sm:ml-7 sm:mr-4 lg:mx-8">
+        <AlertCard darkMode={darkMode} className={`px-4 sm:px-6 lg:px-8`} />
+      </div>
     </div>
   );
 };

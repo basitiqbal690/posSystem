@@ -20,13 +20,13 @@ const Dashboard = () => {
 
   return (
     <DashboardProvider>
-      <div className={`flex transition-colors duration-300`}>
+      <div className="flex w-full">
         <Sidebar />
 
-        <div className="lg:ml-[250px] ml-0 flex-1">
+        <div className="flex-1 ml-0 sm:ml-[170px] lg:ml-[250px] min-w-0">
           <Navbar />
 
-          <main className="pt-[70px] min-h-screen overflow-auto transition-colors duration-300">
+          <main className="pt-[70px] w-full min-h-screen overflow-x-hidden">
             <Routes>
               <Route path="overview" element={<OverView />} />
               <Route path="products" element={<Products />} />

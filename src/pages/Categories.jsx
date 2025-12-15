@@ -57,14 +57,18 @@ const Categories = () => {
 
   return (
     <div
-      className={`${
+      className={`relative pb-6 w-full overflow-x-hidden min-h-screen ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
-      } min-h-screen`}
+      } `}
     >
-      <div className="mt-5 pl-7 pt-7">
-        <h1 className="font-semibold text-2xl">Category Management</h1>
+      <div className="mt-5 pl-7 pt-7 ">
+        <h1 className="font-semibold lg:text-2xl sm:text-lg">
+          Category Management
+        </h1>
         <p
-          className={`${darkMode ? "text-gray-300" : "text-gray-500"} text-xl`}
+          className={` lg:text-xl sm:text-xs ${
+            darkMode ? "text-gray-300" : "text-gray-500"
+          } text-xl`}
         >
           Create and manage categories
         </p>
@@ -73,14 +77,16 @@ const Categories = () => {
       <div
         className={`${
           darkMode ? "bg-gray-900" : "bg-white"
-        } m-6 p-5 rounded-xl flex justify-between shadow`}
+        } lg:m-6 sm:m-3 p-5 rounded-xl flex justify-between shadow sm:ml-6 sm:mr-6 `}
       >
         <div>
-          <h1 className="font-semibold text-xl">Category Management</h1>
+          <h1 className="font-semibold lg:text-xl sm:text-lg">
+            Category Management
+          </h1>
           <p
             className={`${
               darkMode ? "text-gray-300" : "text-gray-500"
-            } text-xl`}
+            } lg:text-xl sm:text-xs`}
           >
             Create and manage categories
           </p>
@@ -88,7 +94,7 @@ const Categories = () => {
 
         <button
           onClick={openAddModal}
-          className="bg-gray-800 text-white px-6 py-4 rounded-xl hover:scale-105 cursor-pointer"
+          className="bg-gray-800 text-white lg:px-6 lg:py-4 sm:px-3 sm:py-1 rounded-xl hover:scale-95 transition cursor-pointer"
         >
           + Add Category
         </button>

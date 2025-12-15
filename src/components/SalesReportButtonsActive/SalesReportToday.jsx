@@ -6,7 +6,7 @@ import { FiShoppingBag } from "react-icons/fi";
 const SalesReportToday = () => {
   const darkMode = useSelector((state) => state.theme.darkMode);
 
-  const cardClass = `p-4 rounded shadow flex items-center justify-between ${
+  const cardClass = `  p-4 rounded shadow flex items-center justify-between ${
     darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
   }`;
 
@@ -16,19 +16,21 @@ const SalesReportToday = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+      <div className="sm:ml-3 sm:mr-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
         <div className={cardClass}>
           <div>
             <p className="text-gray-400 text-sm">Today's Revenue</p>
-            <p className="font-bold text-xl">0.00</p>
+            <p className="font-bold sm:mt-1 sm:mb-1 lg:text-xl sm:text-sm">
+              0.00
+            </p>
             <p className="text-gray-400 text-xs">From 0 transactions</p>
           </div>
         </div>
 
-        <div className={cardClass}>
+        <div className={`${cardClass}`}>
           <div>
             <p className="text-gray-400 text-sm">Transactions</p>
-            <p className="font-bold text-xl">0</p>
+            <p className="font-bold sm:mt-1 sm:mb-1 lg:text-xl sm:text-sm">0</p>
             <p className="text-gray-400 text-xs">Today</p>
           </div>
         </div>
@@ -36,25 +38,27 @@ const SalesReportToday = () => {
         <div className={cardClass}>
           <div>
             <p className="text-gray-400 text-sm">Items Sold</p>
-            <p className="font-bold text-xl">0</p>
+            <p className="font-bold sm:mt-1 sm:mb-1 lg:text-xl sm:text-sm">0</p>
             <p className="text-gray-400 text-xs">Total units</p>
           </div>
-          <FaShoppingCart className="text-purple-500 text-2xl" />
+          <FaShoppingCart className="text-purple-500 lg:text-2xl sm:text-xl" />
         </div>
 
         <div className={cardClass}>
           <div>
             <p className="text-gray-400 text-sm">Avg Transaction</p>
-            <p className="font-bold text-xl">0.00</p>
+            <p className="font-bold sm:mt-1 sm:mb-1 lg:text-xl sm:text-sm">
+              0.00
+            </p>
             <p className="text-gray-400 text-xs">Per transaction</p>
           </div>
-          <FaChartLine className="text-orange-500 text-2xl" />
+          <FaChartLine className="text-orange-500 lg:text-2xl sm:text-xl" />
         </div>
       </div>
 
       {/* Transactions Section */}
-      <div className={sectionClass}>
-        <h2 className="font-semibold mb-2">Today's Transactions</h2>
+      <div className={`${sectionClass} sm:mx-3 sm:mr-6 mb-5`}>
+        <h2 className="font-semibold mb-2 lg:text-xl">Today's Transactions</h2>
         <p className="text-gray-400 text-sm mb-4">Monday, December 8, 2025</p>
 
         <div

@@ -68,10 +68,6 @@ const Profile = () => {
     setForm((s) => ({ ...s, [name]: value }));
   };
 
-  const handleLogout = () => {
-    alert("Logged out (client-side). Implement real auth logout with backend.");
-  };
-
   const cardBase = `rounded-lg shadow p-5 mb-6 ${
     darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
   }`;
@@ -88,19 +84,19 @@ const Profile = () => {
     >
       {/* Header Card */}
       <div className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl p-6 mb-6 shadow-lg flex items-center gap-6">
-        <div className="w-28 h-28 rounded-full bg-white/20 flex items-center justify-center overflow-hidden border-2 border-white">
+        <div className="lg:w-28 lg:h-28 sm:h-15 sm:w-15 rounded-full bg-white/20 flex items-center justify-center overflow-hidden border-2 border-white">
           {profile.avatar ? (
             <img
               src={profile.avatar}
               alt="avatar"
-              className="w-full h-full object-cover"
+              className="lg:w-full lg:h-full object-cover sm:w-20 sm:h-20"
             />
           ) : (
-            <FaUserCircle className="text-7xl opacity-90" />
+            <FaUserCircle className="lg:text-7xl sm:text-3xl opacity-90" />
           )}
         </div>
         <div className="flex-1">
-          <h2 className="text-2xl font-semibold">{`${profile.firstName} ${profile.lastName}`}</h2>
+          <h2 className="lg:text-2xl sm:text-lg font-semibold">{`${profile.firstName} ${profile.lastName}`}</h2>
           <p className="text-sm">{profile.email}</p>
           <div className="mt-3 inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-sm">
             <span className="text-xs">●</span>
@@ -108,7 +104,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="cursor-pointer inline-flex items-center gap-2 bg-white text-indigo-700 px-3 py-2 rounded-md shadow hover:bg-white/90 transition-all duration-300 hover:scale-105 active:scale-95">
+          <label className="cursor-pointer inline-flex items-center gap-2 bg-white text-indigo-700 px-3 py-2 rounded-md shadow hover:bg-white/90 hover:scale-105 active:scale-95 sm:text-sm lg:text-base">
             Change Avatar
             <input
               type="file"
@@ -117,12 +113,6 @@ const Profile = () => {
               className="hidden"
             />
           </label>
-          <button
-            onClick={startEdit}
-            className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-md inline-flex items-center gap-2 transition-all duration-300 hover:bg-indigo-700 hover:scale-105 active:scale-95"
-          >
-            <FaEdit /> Edit Profile
-          </button>
         </div>
       </div>
 
@@ -271,43 +261,6 @@ const Profile = () => {
             >
               —
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Session Management */}
-      <div
-        className={`rounded-lg shadow p-5 mb-6 border-l-4 ${
-          darkMode
-            ? "bg-gray-800 border-red-700 text-white"
-            : "bg-white border-red-200 text-black"
-        }`}
-      >
-        <div className="flex justify-between items-start gap-3">
-          <div>
-            <h4
-              className={`font-semibold ${
-                darkMode ? "text-red-400" : "text-red-600"
-              }`}
-            >
-              Session Management
-            </h4>
-            <p
-              className={`text-sm mt-2 ${
-                darkMode ? "text-gray-300" : "text-gray-600"
-              }`}
-            >
-              Logout from your account. End your current session and return to
-              the login page.
-            </p>
-          </div>
-          <div>
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 bg-red-600 text-white rounded inline-flex items-center gap-2 hover:bg-indigo-700 hover:scale-105 active:scale-95"
-            >
-              <FaPowerOff /> Logout from Account
-            </button>
           </div>
         </div>
       </div>

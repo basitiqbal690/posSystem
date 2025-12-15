@@ -18,7 +18,9 @@ export const DashboardProvider = ({ children }) => {
       {
         title: "Total Revenue ",
         value: "0.00",
-        icon: <FaRupeeSign size={17} />,
+        icon: (
+          <FaRupeeSign lg:size={17} sm:size={15} className={`sm:bg-none`} />
+        ),
         borderColor: "green",
         subText: (
           <div className="flex pl-2 mt-2">
@@ -30,23 +32,36 @@ export const DashboardProvider = ({ children }) => {
       {
         title: "Today's Revenue",
         value: "0.00",
-        icon: <FaRupeeSign size={17} />,
+        icon: (
+          <FaRupeeSign lg:size={17} sm:size={15} className={`sm:bg-none`} />
+        ),
         borderColor: "blue",
-        subText: <span className="ml-2">0 transaction</span>,
+        subText: <span className="ml-2 sm:mt-2">0 transaction</span>,
       },
       {
         title: "Total Products",
         value: totalProducts,
-        icon: <FaRupeeSign size={17} />,
+        icon: (
+          <FaRupeeSign lg:size={17} sm:size={15} className={`sm:bg-none`} />
+        ),
         borderColor: "purple",
-        subText: <span className="ml-2">Active Products</span>,
+        subText: <span className="ml-2 ">Active Products</span>,
       },
       {
         title: "Stock Alert",
         value: "3",
-        icon: <FiAlertTriangle color="red" />,
+        icon: (
+          <FiAlertTriangle
+            color="red"
+            lg:size={17}
+            sm:size={15}
+            className={`sm:bg-none`}
+          />
+        ),
         borderColor: "orange",
-        subText: <span className="ml-4 text-red-500">0 out of stock</span>,
+        subText: (
+          <span className="lg:ml-4 sm:ml-2 text-red-500">0 out of stock</span>
+        ),
       },
     ],
 

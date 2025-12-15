@@ -45,7 +45,7 @@ const Inventory = () => {
     <div
       className={`${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
-      } min-h-screen`}
+      } relative pb-6 w-full overflow-x-hidden min-h-screen`}
     >
       <DashboardHeader
         title="Inventory Management"

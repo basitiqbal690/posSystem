@@ -10,25 +10,36 @@ export const DashboardCard = ({ index }) => {
 
   return (
     <div
-      className={`inline-block h-40 w-60 ml-6 border-l-4 rounded-2xl
+      className={`
+        w-full
+        sm:w-[calc(50%-0.75rem)]
+        lg:w-[calc(25%-1rem)]
+        min-h-[140px]
+        rounded-2xl
+        border-l-4
+        shadow-lg
+        p-4
+        sm:ml-2
         ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}
-        border-${borderColor}-500
       `}
     >
-      <div className="flex justify-around items-center pt-4 pb-4">
-        <p>{title}</p>
-        <p
-          className={`h-8 w-8 rounded flex justify-center items-center text-xl  ${
+      {/* TOP */}
+      <div className="flex justify-between items-center">
+        <p className="text-sm font-medium">{title}</p>
+        <div
+          className={`h-8 w-8 rounded flex justify-center items-center text-lg ${
             darkMode ? "bg-black text-gray-200" : "bg-blue-200 text-gray-700"
           }`}
         >
           {icon}
-        </p>
+        </div>
       </div>
-      <div className="p-4">
-        <p className="pl-2 text-xl font-bold">{value}</p>
-        {subText && <div className="flex mt-2">{subText}</div>}
-      </div>
+
+      {/* VALUE */}
+      <p className="mt-4 text-2xl font-bold">{value}</p>
+
+      {/* SUBTEXT */}
+      {subText && <div className="mt-2 text-sm">{subText}</div>}
     </div>
   );
 };

@@ -19,14 +19,20 @@ const FitnessPos = () => {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-6">
+    <div
+      className="grid gap-6 
+                    grid-cols-1 
+                    sm:grid-cols-2 
+                    md:grid-cols-3 
+                    lg:grid-cols-4"
+    >
       {fitnessProducts.length === 0 ? (
         <p>No fitness products found.</p>
       ) : (
         fitnessProducts.map((item) => (
           <div
             key={item.sku}
-            className="bg-white p-4 rounded-xl shadow transition"
+            className="bg-white p-4 rounded-xl shadow transition transform hover:scale-95"
           >
             <img
               src={item.image}
@@ -40,10 +46,10 @@ const FitnessPos = () => {
             <button
               onClick={() => handleAddToCart(item)}
               disabled={item.stock <= 0}
-              className={`w-full py-2 rounded-lg text-white ${
+              className={`w-full py-2 rounded-lg text-white transition ${
                 item.stock > 0
-                  ? "bg-black hover:bg-gray-800 hover:scale-95"
-                  : "bg-gray-400"
+                  ? "bg-black hover:bg-gray-800"
+                  : "bg-gray-400 cursor-not-allowed"
               }`}
             >
               {item.stock > 0 ? "Add to Cart" : "Out of Stock"}

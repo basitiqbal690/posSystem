@@ -10,24 +10,26 @@ const SalesReport = () => {
 
   return (
     <div
-      className={`min-h-screen p-7 ${
+      className={`relative pb-6 w-full overflow-x-hidden min-h-screen ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
       }`}
     >
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-5">
+      <div className="sm:ml-4 flex flex-col md:flex-row md:justify-between md:items-center mb-5">
         <div>
-          <h1 className="font-semibold text-2xl mt-6">Sales Reports</h1>
-          <p className="text-gray-500 mt-2">
+          <h1 className="font-semibold lg:text-2xl sm:text-lg mt-6 ">
+            Sales Reports
+          </h1>
+          <p className="text-gray-500 mt-2 sm:text-sm lg:text-xl">
             View detailed sales reports and analytics
           </p>
         </div>
 
         {/* Date + Export */}
-        <div className="flex flex-col md:flex-row md:items-center mt-4 md:mt-0 gap-3">
+        <div className="lg:mr-5 sm:mr-10 sm:flex lg:flex md:flex-row md:items-center mt-4 md:mt-0 gap-3">
           <input
             type="date"
-            className={`p-2 rounded border ${
+            className={`p-2 rounded border  ${
               darkMode ? " text-black" : "bg-white border-gray-300 text-black"
             }`}
           />
@@ -38,7 +40,7 @@ const SalesReport = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-4  border-gray-300 mb-5">
+      <div className="sm:ml-0 flex gap-4  border-gray-300 mb-5">
         <button
           className={`px-4 py-2 cursor-pointer ${
             activeTab === "today"

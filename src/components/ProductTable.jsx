@@ -13,7 +13,7 @@ const ProductTable = ({
   return (
     <div
       className={`
-        m-4 sm:m-6 p-4 sm:p-6 rounded-2xl shadow-lg transition-all duration-300
+        m-4 sm:m-6 p-4 sm:p-6 rounded-2xl shadow-lg 
         ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}
       `}
     >

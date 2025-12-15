@@ -34,30 +34,47 @@ const Setting = () => {
 
       {/* Tab Buttons */}
       <div
-        className={`flex justify-between 
-          ${
-            darkMode ? "border-gray-600" : "border-gray-300"
-          } mb-5 text-xl mt-5 mr-10
-        `}
+        className={`
+     mb-5 px-4 pt-10
+    ${darkMode ? "border-gray-600" : "border-gray-300"}
+  `}
       >
-        {[
-          { id: "store", label: "Store" },
-          { id: "tax", label: "Tax" },
-          { id: "receipt", label: "Receipt" },
-          { id: "user", label: "User" },
-          { id: "payment", label: "Payment" },
-          { id: "system", label: "System" },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`px-12 py-2 cursor-pointer  ${
-              activeTab === tab.id ? tabActive : tabInactive
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
+        <div
+          className="
+      grid
+      grid-cols-3          
+      sm:grid-cols-3
+      md:flex              
+      md:gap-5
+    "
+        >
+          {[
+            { id: "store", label: "Store" },
+            { id: "tax", label: "Tax" },
+            { id: "receipt", label: "Receipt" },
+            { id: "user", label: "User" },
+            { id: "payment", label: "Payment" },
+            { id: "system", label: "System" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`
+          px-3 pb-2 text-left
+          text-sm sm:text-base md:text-lg
+          inline-flex
+          transition-colors
+          ${
+            activeTab === tab.id
+              ? " border-blue-500 text-blue-500 cursor-pointer"
+              : " border-transparent text-gray-500 hover:text-blue-400 cursor-pointer"
+          }
+        `}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Tab Content */}

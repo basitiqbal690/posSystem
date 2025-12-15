@@ -79,28 +79,34 @@ const Products = () => {
 
   return (
     <div
-      className={`min-h-screen overflow-y-auto  ${
+      className={`relative pb-6 w-full overflow-x-hidden min-h-screen   ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
       }`}
     >
       <div className="mt-5 pl-7 pt-7">
-        <h1 className="font-semibold text-2xl">Product Management</h1>
-        <p className="text-gray-500 text-xl">Add, Edit or Delete Products</p>
+        <h1 className="font-semibold lg:text-2xl sm:text-xl">
+          Product Management
+        </h1>
+        <p className="text-gray-500 lg:text-xl sm:text-sm">
+          Add, Edit or Delete Products
+        </p>
       </div>
 
       <div
-        className={`m-6 p-5 rounded-xl flex justify-between shadow${
+        className={`lg:m-6 sm:m-3 p-5 sm:ml-6 sm:mr-6 rounded-xl flex justify-between shadow ${
           darkMode ? "bg-gray-800" : "bg-white"
         }`}
       >
         <div>
-          <h1 className="font-semibold text-xl">Products</h1>
-          <p className="text-gray-500 text-xl">Manage your product list</p>
+          <h1 className="font-semibold lg:text-xl sm:text-lg">Products</h1>
+          <p className="text-gray-500 lg:text-xl sm:text-lg">
+            Manage your product list
+          </p>
         </div>
 
         <button
           onClick={openAddModal}
-          className="bg-gray-800 text-white px-6 py-4 rounded-xl hover:scale-95 transition cursor-pointer"
+          className="bg-gray-800 text-white lg:px-6 lg:py-4 sm:px-4 sm:py-1 rounded-xl hover:scale-95 transition cursor-pointer"
         >
           + Add Product
         </button>

@@ -36,10 +36,10 @@ const ProductModal = ({
   return (
     <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex justify-center items-center z-50 animate-fade-in">
       <div
-        className={`w-[90vw] md:w-[40vw] max-w-3xl  p-6 rounded-2xl shadow-2xl ${modalBgClass} overflow-y-auto`}
+        className={`lg:w-[90vw] sm:w-[60vw] md:w-[40vw] max-w-3xl  lg:p-6  sm:p-3 rounded-2xl shadow-2xl ${modalBgClass} overflow-y-auto`}
       >
         {/* Header */}
-        <h2 className="text-2xl font-bold mb-5 text-center">
+        <h2 className="lg:text-2xl sm:text-xl font-bold mb-5 text-center">
           {isEditing ? "Update Product" : "Add New Product"}
         </h2>
 
@@ -50,20 +50,26 @@ const ProductModal = ({
             placeholder="SKU"
             value={formData.sku}
             onChange={handleChange}
-            className={modalBgplaceholderClass + " col-span-2 p-3 rounded-xl"}
+            className={
+              modalBgplaceholderClass + " col-span-2 lg:p-3 sm:p-2 rounded-xl"
+            }
           />
           <input
             name="name"
             placeholder="Product Name"
             value={formData.name}
             onChange={handleChange}
-            className={modalBgplaceholderClass + " col-span-2 p-3 rounded-xl"}
+            className={
+              modalBgplaceholderClass + " col-span-2 lg:p-3 sm:p-2 rounded-xl"
+            }
           />
           <select
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className={modalBgplaceholderClass + " col-span-2 p-3 rounded-xl"}
+            className={
+              modalBgplaceholderClass + " col-span-2 lg:p-3 sm:p-2 rounded-xl"
+            }
           >
             <option value="">Select Category</option>
             <option value="Electronics">Electronics</option>
@@ -78,7 +84,7 @@ const ProductModal = ({
             placeholder="Price"
             value={formData.price}
             onChange={handleChange}
-            className={modalBgplaceholderClass + " p-3 rounded-xl"}
+            className={modalBgplaceholderClass + " lg:p-3 sm:p-2 rounded-xl"}
           />
           <input
             name="stock"
@@ -87,14 +93,16 @@ const ProductModal = ({
             min="0"
             value={formData.stock}
             onChange={handleChange}
-            className={modalBgplaceholderClass + " p-3 rounded-xl"}
+            className={modalBgplaceholderClass + " lg:p-3 sm:p-2 rounded-xl"}
           />
           <input
             name="barcode"
             placeholder="Barcode"
             value={formData.barcode}
             onChange={handleChange}
-            className={modalBgplaceholderClass + " col-span-2 p-3 rounded-xl"}
+            className={
+              modalBgplaceholderClass + " col-span-2 lg:p-3 sm:p-2 rounded-xl"
+            }
           />
 
           {/* Image Upload */}
@@ -106,7 +114,7 @@ const ProductModal = ({
               onChange={handleImageUpload}
               className={
                 modalBgplaceholderClass +
-                " col-span-2 p-3 rounded-xl cursor-pointer"
+                " col-span-2 lg:p-3 sm:p-1 rounded-xl cursor-pointer"
               }
             />
           </div>

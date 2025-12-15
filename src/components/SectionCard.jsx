@@ -9,20 +9,31 @@ const SectionCard = ({ index }) => {
 
   return (
     <div
-      className={`w-[37vw] h-[45vh] rounded-xl p-7  ${
-        darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-      }`}
+      className={`
+        w-full
+        sm:w-[calc(100%-0.5rem)]
+        lg:w-[calc(48.4%-1rem)]
+        min-h-[230px]
+        sm:mr-4
+        sm:mb-2
+        rounded-xl
+        p-6
+        shadow-lg
+        flex flex-col
+        ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}
+      `}
     >
-      <h1 className="text-xl font-semibold">{title}</h1>
-      <div className="flex justify-center items-center mt-7">
+      <h1 className="text-lg font-semibold">{title}</h1>
+
+      <div className="flex flex-1 justify-center items-center">
         <div className="text-center">
           <Icon
-            className={`text-4xl mx-auto  ${
+            className={`text-4xl mx-auto ${
               darkMode ? "text-gray-300" : "text-gray-400"
             }`}
           />
           <p
-            className={`mt-2 text-xl  ${
+            className={`mt-3 text-lg ${
               darkMode ? "text-gray-300" : "text-gray-400"
             }`}
           >

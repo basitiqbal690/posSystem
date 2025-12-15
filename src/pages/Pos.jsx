@@ -61,40 +61,49 @@ const Pos = () => {
     >
       {/* TABS */}
       <div
-        className={`flex border-b mb-5 px-10 gap-5 pt-10 ${
-          darkMode ? "border-gray-700" : "border-gray-300"
-        }`}
+        className={`
+    border-b mb-5 px-4 pt-10
+    ${darkMode ? "border-gray-700" : "border-gray-300"}
+  `}
       >
-        {[
-          "Allproducts",
-          "Electronics",
-          "Appliances",
-          "Fitness",
-          "Home",
-          "Accessories",
-        ].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-4 pb-2 ${
-              activeTab === tab
-                ? "border-b-2 border-black font-semibold"
-                : darkMode
-                ? "text-gray-400 hover:text-white"
-                : "text-gray-500 hover:text-black"
-            }`}
-          >
-            {tab === "Allproducts" ? "All Products" : tab}
-          </button>
-        ))}
+        <div
+          className="
+      grid
+      grid-cols-3          
+      sm:grid-cols-1
+      sm:gap-0
+      md:flex              
+      md:gap-5
+      "
+        >
+          {[
+            "Allproducts",
+            "Electronics",
+            "Appliances",
+            "Fitness",
+            "Home",
+            "Accessories",
+          ].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`
+          px-4 pb-2 text-left
+          ${
+            activeTab === tab
+              ? " border-blue-500 text-blue-500 cursor-pointer"
+              : " border-transparent text-gray-500 hover:text-blue-400 cursor-pointer"
+          }
+        `}
+            >
+              {tab === "Allproducts" ? "All Products" : tab}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* TAB CONTENT */}
-      <div
-        className={`px-6 transition-all duration-300 ${
-          cart.length > 0 ? "pr-[380px]" : ""
-        }`}
-      >
+      <div className={`px-6  ${cart.length > 0 ? "pr-[380px]" : ""}`}>
         {activeTab === "Allproducts" && <AllproductsPos />}
         {activeTab === "Electronics" && <ElectronicsPos />}
         {activeTab === "Appliances" && <AppliancesPos />}
@@ -106,23 +115,26 @@ const Pos = () => {
       {/* RIGHT CART PANEL */}
       {cart.length > 0 && (
         <div
-          className={`fixed right-0 top-[90px] h-[calc(100vh-90px)] w-[350px] p-5 border-l shadow-xl overflow-y-auto z-50 transition-colors
-            ${
-              darkMode
-                ? "bg-gray-800 border-gray-700 text-white"
-                : "bg-white border-gray-300 text-black"
-            }
-          `}
+          className={`fixed top-[71px] right-0  h-[calc(100vh-71px)] p-5 border-l shadow-xl overflow-y-auto z-50 transition-colors
+      w-full sm:w-[200px] 
+      ${
+        darkMode
+          ? "bg-gray-800 border-gray-700 text-white"
+          : "bg-white border-gray-300 text-black"
+      }
+    `}
         >
-          <h2 className="font-bold text-xl mb-4">Cart ({cart.length})</h2>
+          <h2 className="font-bold lg:text-xl sm:text-sm mb-4">
+            Cart ({cart.length})
+          </h2>
 
           <div className="space-y-4 max-h-[33vh] overflow-y-auto">
             {cart.map((item) => (
               <div
                 key={item.sku}
                 className={`flex justify-between items-center p-3 rounded-lg transition
-                  ${darkMode ? "bg-gray-700" : "bg-gray-100"}
-                `}
+            ${darkMode ? "bg-gray-700" : "bg-gray-100"}
+          `}
               >
                 <div>
                   <p className="font-semibold">{item.name}</p>
@@ -164,22 +176,22 @@ const Pos = () => {
           </div>
 
           <div className="mt-6 border-t pt-4 border-gray-400">
-            <div className="flex justify-between">
+            <div className="flex justify-between sm:text-xs">
               <span>Subtotal</span>
               <span>PKR {subtotal.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between mt-2">
+            <div className="flex justify-between mt-2 sm:text-xs">
               <span>Tax ({taxRate}%)</span>
               <span>PKR {tax.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between font-bold text-lg mt-3">
+            <div className="flex justify-between font-bold text-lg mt-3 sm:text-xs">
               <span>Total</span>
               <span>PKR {total.toFixed(2)}</span>
             </div>
 
             <button
               onClick={openCheckoutModal}
-              className="bg-green-600 text-white mt-4 w-full py-3 rounded-lg hover:scale-101 cursor-pointer"
+              className="bg-green-600 sm:text-xs text-white mt-4 w-full py-3 rounded-lg hover:scale-105 cursor-pointer transition"
             >
               Proceed to Checkout
             </button>
