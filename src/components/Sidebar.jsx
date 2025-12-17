@@ -19,22 +19,31 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`${bgColor} lg:w-[250px] lg:h-full sm:h-full sm:fixed sm:w-[170px] auto lg:px-5 lg:py-8 sm:px-3 sm:py-8 lg:fixed top-0 left-0`}
+      className={`
+        ${bgColor}
+        fixed top-0 left-0
+        h-screen
+        lg:w-[259px] sm:w-[170px]
+        px-3 lg:px-5
+        py-8
+        overflow-y-auto
+        scrollbar-thin
+      `}
     >
-      <nav>
-        <ul>
+      <nav className="h-full flex flex-col">
+        <ul className="flex-1 space-y-1">
           <div>
             <h1
-              className={`font-bold lg:text-xl text-center sm:text-xs  ${textColor}`}
+              className={`font-bold lg:text-lg text-center sm:text-xs ${textColor}`}
             >
               Admin Panel
             </h1>
             <p
-              className={`font-bold text-center mt-1 sm:text-xs lg:text-lg ${textColor}`}
+              className={`font-bold text-center mt-1 sm:text-xs lg:text-base ${textColor}`}
             >
               Management Dashboard
             </p>
-            <hr className={`mt-8 mb-6 sm:text-xs ${hrColor}`} />
+            <hr className={`mt-8 mb-6 ${hrColor}`} />
           </div>
 
           {/* Menu Items */}
@@ -101,10 +110,13 @@ const Sidebar = () => {
             <IoSettingsOutline className="lg:text-xl sm:text-sm" />
             <span>Settings</span>
           </Link>
-
-          <hr className={`mt-20 mb-5 ${hrColor}`} />
-          <Footer />
         </ul>
+
+        {/* Footer stays at bottom but scrolls when needed */}
+        <div className="mt-6">
+          <hr className={`mb-4 ${hrColor}`} />
+          <Footer />
+        </div>
       </nav>
     </aside>
   );

@@ -103,7 +103,11 @@ const Pos = () => {
       </div>
 
       {/* TAB CONTENT */}
-      <div className={`px-6  ${cart.length > 0 ? "pr-[380px]" : ""}`}>
+      <div
+        className={`px-6  ${
+          cart.length > 0 ? "sm:pr-[210px] lg:pr-[350px] " : ""
+        }`}
+      >
         {activeTab === "Allproducts" && <AllproductsPos />}
         {activeTab === "Electronics" && <ElectronicsPos />}
         {activeTab === "Appliances" && <AppliancesPos />}
@@ -116,7 +120,7 @@ const Pos = () => {
       {cart.length > 0 && (
         <div
           className={`fixed top-[71px] right-0  h-[calc(100vh-71px)] p-5 border-l shadow-xl overflow-y-auto z-50 transition-colors
-      w-full sm:w-[200px] 
+      lg:w-[340px] sm:w-[200px] 
       ${
         darkMode
           ? "bg-gray-800 border-gray-700 text-white"

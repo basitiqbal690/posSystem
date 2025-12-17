@@ -3,12 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../../store/slice/CartSlice";
 import { updateProductStock } from "../../store/slice/AddProductSlice";
 
-const HomePos = () => {
+const HomePos = ({ isModalOpen }) => {
   const products = useSelector((state) => state.productsAdd.products);
+  const theme = useSelector((state) => state.theme.mode);
   const dispatch = useDispatch();
 
-  // Filter only Home category products
-  const homeProducts = products.filter((item) => item.category === "Home");
+  // Filter Home products (safe case-insensitive)
+  const homeProducts = products.filter(
+    (item) => item.category?.toLowerCase() === "home"
+  );
 
   const handleAddToCart = (item) => {
     if (item.stock <= 0) return alert("Out of Stock!");
@@ -18,37 +21,74 @@ const HomePos = () => {
 
   return (
     <div
-      className="grid gap-6 
-                    grid-cols-1 
-                    sm:grid-cols-2 
-                    md:grid-cols-3 
-                    lg:grid-cols-4"
+      className={`
+        grid sm:gap-8 lg:gap-4 w-full transition-all duration-300
+        ${
+          isModalOpen
+            ? "sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+            : "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        }
+        ${isModalOpen ? "opacity-80" : ""}
+      `}
     >
       {homeProducts.length === 0 ? (
-        <p>No home products found.</p>
+        <p className={theme === "dark" ? "text-white" : "text-black"}>
+          No home products found.
+        </p>
       ) : (
         homeProducts.map((item) => (
           <div
             key={item.sku}
-            className="bg-white p-4 rounded-xl shadow transition transform hover:scale-95"
+            className={`p-4 rounded-xl shadow
+              ${
+                theme === "dark"
+                  ? "bg-gray-800 text-white"
+                  : "bg-white text-black"
+              }
+            `}
           >
             <img
               src={item.image}
               alt={item.name}
-              className="w-full h-40 object-cover rounded mb-3"
+              className="w-full h-36 lg:h-40 object-cover rounded mb-3"
             />
-            <h2 className="font-semibold text-lg">{item.name}</h2>
-            <p className="text-gray-500">{item.category}</p>
-            <p className="font-bold mt-1">PKR {item.price}</p>
-            <p className="text-gray-500 text-sm mb-3">Stock: {item.stock}</p>
+
+            <h2
+              className={`font-semibold sm:text-sm lg:text-xl capitalize ${
+                isModalOpen ? "sm:text-xs" : ""
+              }`}
+            >
+              {item.name}
+            </h2>
+
+            <p className="sm:text-xs lg:text-lg text-gray-500 capitalize">
+              {item.category.charAt(0).toUpperCase() + item.category.slice(1)}.
+            </p>
+
+            <p
+              className={`font-bold mt-1 sm:text-xs lg:text-lg ${
+                isModalOpen ? "text-xs" : ""
+              }`}
+            >
+              PKR {item.price}
+            </p>
+
+            <p className="text-sm text-gray-500 mb-3 sm:text-xs lg:text-lg">
+              Stock: {item.stock}
+            </p>
+
             <button
               onClick={() => handleAddToCart(item)}
               disabled={item.stock <= 0}
-              className={`w-full py-2 rounded-lg text-white transition ${
-                item.stock > 0
-                  ? "bg-black hover:bg-gray-800"
-                  : "bg-gray-400 cursor-not-allowed"
-              }`}
+              className={`w-full sm:py-2 sm:px-1 lg:py-2 lg:text-lg sm:text-xs rounded-lg transition cursor-pointer
+                ${
+                  item.stock > 0
+                    ? theme === "dark"
+                      ? "bg-white text-black hover:scale-95"
+                      : "bg-black text-white hover:scale-95"
+                    : "bg-gray-400 text-white"
+                }
+              `}
             >
               {item.stock > 0 ? "Add to Cart" : "Out of Stock"}
             </button>

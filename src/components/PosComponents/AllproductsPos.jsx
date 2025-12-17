@@ -17,12 +17,16 @@ const AllproductsPos = ({ isModalOpen }) => {
   return (
     <div
       className={`
-        grid gap-4
-        grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-        w-full
-        transition-all duration-300
-        ${isModalOpen ? "sm:opacity-80 pointer-events-none" : ""}
-      `}
+    grid sm:gap-8 lg:gap-4 w-full transition-all duration-300
+
+    ${
+      isModalOpen
+        ? " sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+        : " sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    }
+
+    ${isModalOpen ? "opacity-80" : ""}
+  `}
     >
       {products.length === 0 ? (
         <p className={theme === "dark" ? "text-white" : "text-black"}>
@@ -43,21 +47,38 @@ const AllproductsPos = ({ isModalOpen }) => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-full h-36 lg:h-40 object-cover rounded mb-3"
+              className={`w-full h-36 lg:h-40 object-cover rounded mb-3
+              ${isModalOpen ? " " : ""}`}
             />
 
-            <h2 className="font-semibold text-sm lg:text-lg">{item.name}</h2>
+            <h2
+              className={`font-semibold sm:text-sm lg:text-xl capitalize ${
+                isModalOpen ? "sm:text-xs" : ""
+              }`}
+            >
+              {item.name}
+            </h2>
 
-            <p className="text-xs text-gray-500">{item.category}</p>
+            <p className="sm:text-xs lg:text-lg text-gray-500 capitalize">
+              {item.category.charAt(0).toUpperCase() + item.category.slice(1)}.
+            </p>
 
-            <p className="font-bold mt-1">PKR {item.price}</p>
+            <p
+              className={`font-bold mt-1 sm:text-xs lg:text-lg capitalize ${
+                isModalOpen ? "text-xs" : ""
+              }`}
+            >
+              PKR {item.price}
+            </p>
 
-            <p className="text-sm text-gray-500 mb-3">Stock: {item.stock}</p>
+            <p className="text-sm text-gray-500 mb-3 sm:text-xs lg:text-lg capitalize">
+              Stock: {item.stock}
+            </p>
 
             <button
               onClick={() => handleAddToCart(item)}
               disabled={item.stock <= 0}
-              className={`w-full py-2 rounded-lg transition ${
+              className={`w-full sm:py-2 sm:px-1 lg:py-2 lg:text-lg sm:text-xs rounded-lg transition cursor-pointer ${
                 item.stock > 0
                   ? theme === "dark"
                     ? "bg-white text-black hover:scale-95"
@@ -66,6 +87,7 @@ const AllproductsPos = ({ isModalOpen }) => {
               }`}
             >
               {item.stock > 0 ? "Add to Cart" : "Out of Stock"}
+              {isModalOpen ? "sm:text-xs" : ""}
             </button>
           </div>
         ))
