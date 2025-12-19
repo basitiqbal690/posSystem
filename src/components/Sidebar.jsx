@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode);
 
-  // Colors based on darkMode
   const bgColor = darkMode ? "bg-gray-900" : "bg-blue-800";
   const textColor = darkMode ? "text-gray-200" : "text-white";
   const hoverColor = darkMode ? "hover:bg-gray-800" : "hover:bg-blue-900";
@@ -19,27 +18,17 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`
-        ${bgColor}
-        fixed top-0 left-0
-        h-screen
-        lg:w-[259px] sm:w-[170px]
-        px-3 lg:px-5
-        py-8
-        overflow-y-auto
-        scrollbar-thin
-      `}
+      className={`${bgColor} fixed top-0 left-0 h-screen lg:w-[259px] sm:w-[170px] px-3 lg:px-5 py-8 overflow-y-auto scrollbar-thin`}
     >
       <nav className="h-full flex flex-col">
         <ul className="flex-1 space-y-1">
-          <div>
-            <h1
-              className={`font-bold lg:text-lg text-center sm:text-xs ${textColor}`}
-            >
+          {/* Logo */}
+          <div className="text-center">
+            <h1 className={`font-bold lg:text-lg sm:text-xs ${textColor}`}>
               Admin Panel
             </h1>
             <p
-              className={`font-bold text-center mt-1 sm:text-xs lg:text-base ${textColor}`}
+              className={`font-bold mt-1 sm:text-xs lg:text-base ${textColor}`}
             >
               Management Dashboard
             </p>
@@ -112,7 +101,7 @@ const Sidebar = () => {
           </Link>
         </ul>
 
-        {/* Footer stays at bottom but scrolls when needed */}
+        {/* Footer */}
         <div className="mt-6">
           <hr className={`mb-4 ${hrColor}`} />
           <Footer />

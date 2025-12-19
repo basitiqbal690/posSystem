@@ -23,10 +23,10 @@ const Dashboard = () => {
       <div className="flex w-full">
         <Sidebar />
 
-        <div className="flex-1 ml-0 sm:ml-[170px] lg:ml-[250px] min-w-0">
+        <div className="flex-1 ml-0 sm:ml-[170px] lg:ml-[250px] min-w-0 navbar">
           <Navbar />
 
-          <main className="pt-[70px] w-full min-h-screen overflow-x-hidden">
+          <main className="pt-[70px] w-full min-h-screen overflow-x-hidden routes-content">
             <Routes>
               <Route path="overview" element={<OverView />} />
               <Route path="products" element={<Products />} />

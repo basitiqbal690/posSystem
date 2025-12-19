@@ -30,6 +30,8 @@ const Navbar = () => {
         h-[70px]
         z-50
         shadow-md
+
+
         ${darkMode ? "bg-gray-900" : "bg-white"}
       `}
     >

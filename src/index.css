@@ -1,31 +1,39 @@
 @import "tailwindcss";
 
-/* In your main CSS file (e.g., index.css) */
+/* @media (max-width: 639px) {
+  .sidebar {
+    transition: width 0.3s ease;
+  }
+  .sidebar.open {
+    width: 200px; 
+  }
 
-/* Light mode defaults (or define them on :root) */
-:root {
-  --background-color: #ffffff;
-  --text-color: #333333;
-  --navbar-bg: #f3f4f6; /* Light gray */
+  .sidebar .menu-text {
+    display: none;
+  }
+  .sidebar.open .menu-text {
+    display: inline-block;
+  }
+
+  .sidebar .logo-text {
+    display: none;
+  }
+  .sidebar.open .logo-text {
+    display: block;
+  }
+
+  .navbar{
+    padding-left: 300px;
+  }
+
+  .routes-content{
+    padding-left: 200px;
+  }
 }
 
-/* Dark mode overrides (applied when the 'dark' class is on <html>) */
-html.dark {
-  --background-color: #1f2937; /* Dark gray/blue */
-  --text-color: #f3f4f6; /* Light text */
-  --navbar-bg: #374151; /* Slightly darker gray */
-}
+ */
 
-/* Apply the variables globally */
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: background-color 0.3s, color 0.3s;
-}
 
-/* Apply the variables to the Navbar */
-.border {
-  /* You may need to replace your Tailwind classes (border) with the new background variable */
-  background-color: var(--navbar-bg);
-  border-color: var(--text-color); /* Just an example */
-}
+
+
+
