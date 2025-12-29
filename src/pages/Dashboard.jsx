@@ -10,7 +10,7 @@ import Inventory from "../pages/Inventory";
 import SalesReport from "../pages/SalesReport";
 import Setting from "../pages/Setting";
 import { DashboardProvider } from "../context/DashboardContext";
-import Pos from "./Pos";
+import Pos from "../pages/Pos";
 
 // Redux
 // import { useSelector } from "react-redux";
@@ -20,13 +20,14 @@ const Dashboard = () => {
 
   return (
     <DashboardProvider>
-      <div className="flex w-full">
-        <Sidebar />
-
-        <div className="flex-1 ml-0 sm:ml-[170px] lg:ml-[250px] min-w-0">
+      <div className="flex w-full min-h-screen bg-gray-200 overflow-x-hidden">
+        <div className="block">
+          <Sidebar />
+        </div>
+        <div className=" flex flex-1 items-center sm:ml-[170px] md:ml-[200px] lg:ml-64 min-w-0">
           <Navbar />
 
-          <main className="pt-[70px] w-full min-h-screen overflow-x-hidden">
+          <main className="pt-[72px] w-full min-h-screen overflow-x-hidden overflow-y-auto">
             <Routes>
               <Route path="overview" element={<OverView />} />
               <Route path="products" element={<Products />} />

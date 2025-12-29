@@ -8,6 +8,7 @@ import AppliancesPos from "../components/PosComponents/AppliancesPos";
 import FitnessPos from "../components/PosComponents/FitnessPos";
 import AccessoriesPos from "../components/PosComponents/AccessoriesPos";
 import HomePos from "../components/PosComponents/HomePos";
+import Calculator from "../components/Calculator";
 
 import {
   removeFromCart,
@@ -179,35 +180,43 @@ const Pos = () => {
             ))}
           </div>
 
-          <div className="mt-6 border-t pt-4 border-gray-400">
-            <div className="flex justify-between sm:text-xs">
-              <span>Subtotal</span>
-              <span>PKR {subtotal.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between mt-2 sm:text-xs">
-              <span>Tax ({taxRate}%)</span>
-              <span>PKR {tax.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between font-bold text-lg mt-3 sm:text-xs">
-              <span>Total</span>
-              <span>PKR {total.toFixed(2)}</span>
-            </div>
+         <div className="mt-6 border-t pt-4 border-gray-400">
+  <div className="flex justify-between sm:text-xs">
+    <span>Subtotal</span>
+    <span>PKR {subtotal.toFixed(2)}</span>
+  </div>
 
-            <button
-              onClick={openCheckoutModal}
-              className="bg-green-600 sm:text-xs text-white mt-4 w-full py-3 rounded-lg hover:scale-105 cursor-pointer transition"
-            >
-              Proceed to Checkout
-            </button>
+  <div className="flex justify-between mt-2 sm:text-xs">
+    <span>Tax ({taxRate}%)</span>
+    <span>PKR {tax.toFixed(2)}</span>
+  </div>
 
-            {showModal && (
-              <CheckoutModal
-                totalAmount={total}
-                onClose={closeCheckoutModal}
-                onComplete={handleCompletePayment}
-              />
-            )}
-          </div>
+  <div className="flex justify-between font-bold text-lg mt-3 sm:text-xs">
+    <span>Total</span>
+    <span>PKR {total.toFixed(2)}</span>
+  </div>
+
+  {/* CALCULATOR */}
+  <div className="mt-4">
+    <Calculator />
+  </div>
+
+  <button
+    onClick={openCheckoutModal}
+    className="bg-green-600 sm:text-xs text-white mt-4 w-full py-3 rounded-lg hover:scale-105 cursor-pointer transition"
+  >
+    Proceed to Checkout
+  </button>
+
+  {showModal && (
+    <CheckoutModal
+      totalAmount={total}
+      onClose={closeCheckoutModal}
+      onComplete={handleCompletePayment}
+    />
+  )}
+</div>
+
         </div>
       )}
     </div>

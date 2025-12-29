@@ -13,17 +13,30 @@ const Inventory = () => {
   const darkMode = useSelector((state) => state.theme.darkMode);
 
   const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
 
+  /* ---------------- FILTER + SEARCH LOGIC ---------------- */
+
   const filteredProducts = productList.filter((p) => {
-    if (filter === "all") return true;
-    if (filter === "low") return Number(p.stock) > 0 && Number(p.stock) <= 10;
-    if (filter === "out") return Number(p.stock) === 0;
-    return true;
+    // Stock filter
+    if (filter === "low" && !(Number(p.stock) > 0 && Number(p.stock) <= 10))
+      return false;
+    if (filter === "out" && Number(p.stock) !== 0) return false;
+
+    // Search filter
+    const keyword = search.toLowerCase();
+    return (
+      p.name.toLowerCase().includes(keyword) ||
+      p.sku.toLowerCase().includes(keyword) ||
+      p.category.toLowerCase().includes(keyword)
+    );
   });
+
+  /* ------------------------------------------------------- */
 
   const handleStockUpdate = (product, remove = false) => {
     setSelectedProduct(product);
@@ -52,8 +65,9 @@ const Inventory = () => {
         description="Monitor and adjust product stock levels"
       />
 
-      {/* Filter Buttons */}
-      <div className="flex ml-8 mt-6 gap-4  border-gray-400 pb-1">
+      {/* FILTER + SEARCH BAR */}
+      <div className="flex flex-wrap items-center gap-4 px-8 mt-6">
+        {/* Filter Buttons */}
         {[
           { key: "all", label: "All Products" },
           { key: "low", label: "Low Stock" },
@@ -62,25 +76,37 @@ const Inventory = () => {
           <button
             key={tab.key}
             onClick={() => setFilter(tab.key)}
-            className={`px-4 py-2 cursor-pointer ${
+            className={`px-4 py-2 border-b-2 transition cursor-pointer ${
               filter === tab.key
                 ? darkMode
-                  ? " border-white font-semibold"
-                  : " border-black font-semibold"
-                : darkMode
-                ? "text-gray-300"
-                : "text-gray-600"
+                  ? "border-white font-semibold"
+                  : "border-black font-semibold"
+                : "border-transparent text-gray-500"
             }`}
           >
             {tab.label}
           </button>
         ))}
+
+        {/* SEARCH INPUT */}
+        <input
+          type="text"
+          placeholder="Search by name, SKU, or category"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className={`ml-auto px-4 py-2 rounded-lg w-[260px] md:ml-0 sm:ml-0
+            ${
+              darkMode
+                ? "bg-gray-800 text-white placeholder-gray-400"
+                : "bg-white text-black placeholder-gray-500"
+            }
+          `}
+        />
       </div>
 
-      {/* Inventory Table */}
+      {/* INVENTORY TABLE */}
       <div
-        className={`
-          m-6 p-5 rounded-xl shadow overflow-x-auto 
+        className={`m-6 p-5 rounded-xl shadow overflow-x-auto
           ${darkMode ? "bg-gray-900 text-white" : "bg-white text-black"}
         `}
       >
@@ -97,9 +123,9 @@ const Inventory = () => {
               ].map((col) => (
                 <th
                   key={col}
-                  className={`text-left border-b pt-3 pb-3 px-4
-                  ${darkMode ? "border-gray-700" : "border-gray-300"}
-                `}
+                  className={`border-b px-4 py-3
+                    ${darkMode ? "border-gray-700" : "border-gray-300"}
+                  `}
                 >
                   {col}
                 </th>
@@ -112,7 +138,7 @@ const Inventory = () => {
               <tr>
                 <td
                   colSpan={6}
-                  className={` py-4 text-center ${
+                  className={`py-6 text-center ${
                     darkMode ? "text-gray-400" : "text-gray-500"
                   }`}
                 >
@@ -136,34 +162,26 @@ const Inventory = () => {
                     <td className="px-4 py-4">{product.stock}</td>
 
                     <td
-                      className={`px-6 py-4 font-semibold ${
+                      className={`px-4 py-4 font-semibold ${
                         status === "Out of Stock"
                           ? "text-red-500"
                           : status === "Low Stock"
-                          ? "text-yellow-600"
-                          : "text-green-600"
+                          ? "text-yellow-500"
+                          : "text-green-500"
                       }`}
                     >
                       {status}
                     </td>
 
-                    <td className="px-6 py-4 flex gap-3">
+                    <td className="px-4 py-4 flex gap-3">
                       <CiEdit
                         size={22}
-                        className={
-                          darkMode
-                            ? "text-blue-400 cursor-pointer"
-                            : "text-blue-600 cursor-pointer"
-                        }
+                        className="text-blue-500 cursor-pointer"
                         onClick={() => handleStockUpdate(product, false)}
                       />
                       <MdDeleteOutline
                         size={22}
-                        className={
-                          darkMode
-                            ? "text-red-400 cursor-pointer"
-                            : "text-red-500 cursor-pointer"
-                        }
+                        className="text-red-500 cursor-pointer"
                         onClick={() => handleStockUpdate(product, true)}
                       />
                     </td>
@@ -175,7 +193,7 @@ const Inventory = () => {
         </table>
       </div>
 
-      {/* Stock Modal */}
+      {/* STOCK MODAL */}
       {selectedProduct && (
         <StockModal
           open={modalOpen}

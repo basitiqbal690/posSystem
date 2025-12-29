@@ -1,4 +1,9 @@
-@import "tailwindcss";
+    @import "tailwindcss";
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
 
 /* In your main CSS file (e.g., index.css) */
 
@@ -28,4 +33,38 @@ body {
   /* You may need to replace your Tailwind classes (border) with the new background variable */
   background-color: var(--navbar-bg);
   border-color: var(--text-color); /* Just an example */
+}
+@media (min-width: 640px) and (max-width: 984px) {
+  .user-img {
+    visibility: hidden; /* smaller width */
+  }
+}
+
+/* index.css */
+@media (max-width: 639px) {
+  .product-page-tight {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .product-header-stack {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .product-add-btn {
+    width: auto;
+    text-align: center;
+  }
+  .table-cell-sm {
+    padding: 0.25rem 0.5rem; /* smaller padding */
+    font-size: 0.75rem; /* smaller font */
+    white-space: nowrap; /* prevent wrapping */
+  }
+  .product-sm-button {
+
+    margin-left: 0px;
+    margin-right: 20px;
+  }
 }

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Clock from "react-clock";
 import "react-clock/dist/Clock.css";
-
 import { FcHome } from "react-icons/fc";
 import { RiHomeLine } from "react-icons/ri";
 import { LuLogOut } from "react-icons/lu";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { Link } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../store/slice/ThemeSlice";
 
@@ -25,9 +23,10 @@ const Navbar = () => {
     <header
       className={`
         fixed top-0 right-0
-        sm:left-[170px]
-        lg:left-[250px]
-        h-[70px]
+       w-full min-[640px]:w-[calc(100%-170px)]
+        md:w-[calc(100%-200px)]
+        lg:w-[calc(100%-256px)]
+        h-[72px]
         z-50
         shadow-md
         ${darkMode ? "bg-gray-900" : "bg-white"}
@@ -35,19 +34,19 @@ const Navbar = () => {
     >
       <nav className="h-full flex items-center justify-between px-4">
         {/* LEFT SECTION */}
-        <div className="flex items-center gap-3">
-          <FcHome className="text-3xl" />
+        <div className="h-full flex items-center gap-1">
+          <FcHome className="mr-1 text-3xl" />
 
           <div>
             <h1
-              className={`font-bold lg:text-xl sm:text-sm ${
+              className={`min-[700px]:mr-1 flex font-bold text-lg sm:text-xl ${
                 darkMode ? "text-white" : "text-black"
               }`}
             >
               Point of Sales
             </h1>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 max-[791px]:hidden">
               <RiHomeLine
                 className={`lg:text-lg ${
                   darkMode ? "text-gray-300" : "text-gray-600"
@@ -103,7 +102,7 @@ const Navbar = () => {
             }`}
           >
             <div className="hidden sm:block text-xs leading-tight">
-              <span>Administrator</span>
+              <span>Profile</span>
               <br />
               <span className="font-bold">Admin User</span>
             </div>

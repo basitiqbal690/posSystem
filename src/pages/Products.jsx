@@ -11,7 +11,7 @@ import ProductModal from "../components/ProductModal";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productsAdd.products);
+  const productList = useSelector((state) => state.productsAdd?.products || []);
   const darkMode = useSelector((state) => state.theme.darkMode); // DARK MODE
 
   const [openModal, setOpenModal] = useState(false);
@@ -79,7 +79,7 @@ const Products = () => {
 
   return (
     <div
-      className={`relative pb-6 w-full overflow-x-hidden min-h-screen   ${
+      className={`pb-6 w-full min-h-screen   ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
       }`}
     >
@@ -93,7 +93,7 @@ const Products = () => {
       </div>
 
       <div
-        className={`lg:m-6 sm:m-3 p-5 sm:ml-6 sm:mr-6 rounded-xl flex justify-between shadow ${
+        className={`lg:m-6  sm:m-3 p-5 sm:ml-6 sm:mr-6 rounded-xl flex justify-between shadow ${
           darkMode ? "bg-gray-800" : "bg-white"
         }`}
       >

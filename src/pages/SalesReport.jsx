@@ -15,18 +15,18 @@ const SalesReport = () => {
       }`}
     >
       {/* Header */}
-      <div className="sm:ml-4 flex flex-col md:flex-row md:justify-between md:items-center mb-5">
+      <div className="sm:ml-4 flex flex-col md:ml-4 mb-5">
         <div>
-          <h1 className="font-semibold lg:text-2xl sm:text-lg mt-6 ">
+          <h1 className="font-semibold lg:text-2xl sm:text-lg md:text-md mt-6 ">
             Sales Reports
           </h1>
-          <p className="text-gray-500 mt-2 sm:text-sm lg:text-xl">
+          <p className="text-gray-500 mt-0 sm:text-sm md:text-sm lg:text-lg">
             View detailed sales reports and analytics
           </p>
         </div>
 
         {/* Date + Export */}
-        <div className="lg:mr-5 sm:mr-10 sm:flex lg:flex md:flex-row md:items-center mt-4 md:mt-0 gap-3">
+        <div className="lg:mr-5 sm:mr-10 sm:flex lg:flex md:flex-row md:items-center mt-4 gap-3">
           <input
             type="date"
             className={`p-2 rounded border  ${
